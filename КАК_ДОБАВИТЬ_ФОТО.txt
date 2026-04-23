@@ -1,0 +1,57 @@
+╔══════════════════════════════════════════════════════════╗
+║          MotorDreams Collection — Инструкция             ║
+╚══════════════════════════════════════════════════════════╝
+
+СТРУКТУРА ПАПКИ:
+────────────────
+  MotorDreams/
+  ├── index.html          ← открывай это в браузере
+  ├── КАК_ДОБАВИТЬ_ФОТО.txt
+  └── photos/
+      ├── 01_cadillac_eldorado.jpg
+      ├── 02_mercedes_300sl.jpg
+      ├── 03_ford_mustang_shelby.jpg
+      ├── 04_ferrari_f40.jpg
+      ├── 05_lamborghini_diablo.jpg
+      ├── 06_porsche_911_993.jpg
+      ├── 07_toyota_supra_mk4.jpg
+      ├── 08_bugatti_veyron.jpg
+      ├── 09_mclaren_p1.jpg
+      ├── 10_koenigsegg_agera_r.jpg
+      ├── 11_aston_martin_db5.jpg
+      ├── 12_lamborghini_countach.jpg
+      ├── 13_porsche_918_spyder.jpg
+      ├── 14_bmw_m1.jpg
+      └── 15_pagani_zonda_f.jpg
+
+
+ЧТО СДЕЛАТЬ:
+─────────────
+1. Найди фото каждого автомобиля (Google Images, Яндекс.Картинки)
+2. Сохрани фото в папку photos/ с точным именем файла
+   Например: 04_ferrari_f40.jpg
+
+3. Формат файла — JPG или PNG
+   Если PNG — просто переименуй расширение на .jpg (или
+   замени в index.html "photos/04_ferrari_f40.jpg" на
+   "photos/04_ferrari_f40.png")
+
+4. Рекомендуемый размер фото: от 800×450 пикселей
+   Соотношение сторон: 16:9 смотрится лучше всего
+
+5. Открой index.html в браузере — фото появятся!
+
+
+ГДЕ ИСКАТЬ ФОТО:
+─────────────────
+• Google: "Ferrari F40 side view HD" → Картинки → ПКМ → Сохранить
+• Яндекс.Картинки: то же самое
+• Unsplash.com — бесплатные фото (поиск на английском)
+• Wikimedia Commons: commons.wikimedia.org
+
+
+ВАЖНО:
+───────
+• Не переименовывай папку photos/ и файл index.html
+• Они должны быть в одной папке
+• Открывай index.html двойным кликом в браузере Chrome/Firefox
