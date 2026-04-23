@@ -1958,6 +1958,32 @@ updateCompareBar();
   
   protectWM.observe(document.body, { childList: true, attributes: true, subtree: true });
 })();
+
+// ════════════════════════════════════════════════════════════════════
+// ANTI-INSPECT (БЛОКИРОВКА ПРАВОГО КЛИКА И ГОРЯЧИХ КЛАВИШ)
+// ════════════════════════════════════════════════════════════════════
+// Отключаем правый клик
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Отключаем горячие клавиши
+document.addEventListener('keydown', e => {
+  // Блокировка F12
+  if (e.key === 'F12') {
+    e.preventDefault();
+  }
+  // Блокировка Ctrl+U / Cmd+U (Просмотр исходного кода)
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
+    e.preventDefault();
+  }
+  // Блокировка Ctrl+S / Cmd+S (Сохранение страницы)
+  if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+    e.preventDefault();
+  }
+  // Блокировка Ctrl+Shift+I, J, C / Cmd+Option+I, J, C (Инструменты разработчика)
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'I', 'j', 'J', 'c', 'C'].includes(e.key)) {
+    e.preventDefault();
+  }
+});
 </script>
 </body>
 </html>
