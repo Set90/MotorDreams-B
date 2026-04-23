@@ -34,6 +34,19 @@ body {
   font-weight: 300;
   line-height: 1.6;
   overflow-x: hidden;
+  /* Защита от выделения и копирования текста */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Разрешаем вводить текст только в поля ввода и текстовые области */
+input, textarea, select {
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
 }
 
 /* ── SCROLLBAR ─────────────────────────────────────────────────── */
