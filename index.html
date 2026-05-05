@@ -7,267 +7,1932 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {--bg: #0a0a0f;--surface: #12121a;--card: #18182280;--border: #ffffff12;--border-lit: #ffffff22;--gold: #c8922a;--gold-dim: #c8922a55;--white: #f0ede8;--muted: #888080;--red: #c0392b;--font-display: 'Bebas Neue', sans-serif;--font-body: 'DM Sans', sans-serif;--font-mono: 'DM Mono', monospace;}
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --card: #18182280;
+  --border: #ffffff12;
+  --border-lit: #ffffff22;
+  --gold: #c8922a;
+  --gold-dim: #c8922a55;
+  --white: #f0ede8;
+  --muted: #888080;
+  --red: #c0392b;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 html { scroll-behavior: smooth; }
-body {background: var(--bg);color: var(--white);font-family: var(--font-body);font-weight: 300;line-height: 1.6;overflow-x: hidden;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
-input, textarea, select {-webkit-user-select: auto;-moz-user-select: auto;-ms-user-select: auto;user-select: auto;}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ─────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
-nav {position: fixed; top: 0; left: 0; right: 0; z-index: 100;display: flex; align-items: center; justify-content: space-between;padding: 0 3rem;height: 64px;background: linear-gradient(180deg, #0a0a0fdd 0%, transparent 100%);backdrop-filter: blur(12px);border-bottom: 1px solid var(--border);transition: background .3s;}
-.nav-logo {font-family: var(--font-display);font-size: 1.6rem;letter-spacing: .08em;color: var(--white);cursor: pointer;user-select: none;}
+
+/* ── NAV ───────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  height: 64px;
+  background: linear-gradient(180deg, #0a0a0fdd 0%, transparent 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: .08em;
+  color: var(--white);
+  cursor: pointer;
+  user-select: none;
+}
 .nav-logo span { color: var(--gold); }
+
 .nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-links a {font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;color: var(--muted); text-decoration: none; transition: color .2s;cursor: pointer;}
+.nav-links a {
+  font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color .2s;
+  cursor: pointer;
+}
 .nav-links a:hover, .nav-links a.active { color: var(--white); }
-.garage-btn {display: flex; align-items: center; gap: .5rem;font-family: var(--font-mono); font-size: .75rem;background: none; border: 1px solid var(--border-lit);color: var(--white); padding: .4rem 1rem; border-radius: 2px;cursor: pointer; transition: border-color .2s, color .2s;}
+
+.garage-btn {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono); font-size: .75rem;
+  background: none; border: 1px solid var(--border-lit);
+  color: var(--white); padding: .4rem 1rem; border-radius: 2px;
+  cursor: pointer; transition: border-color .2s, color .2s;
+}
 .garage-btn:hover { border-color: var(--gold); color: var(--gold); }
-.garage-count {background: var(--gold); color: #000; width: 18px; height: 18px;border-radius: 50%; display: flex; align-items: center; justify-content: center;font-size: .65rem; font-weight: 700; font-family: var(--font-body);}
+.garage-count {
+  background: var(--gold); color: #000; width: 18px; height: 18px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 700; font-family: var(--font-body);
+}
+
+/* ── PAGES ─────────────────────────────────────────────────────── */
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
-#hero {position: relative; height: 100vh;display: flex; flex-direction: column;align-items: center; justify-content: center;overflow: hidden;}
-.hero-bg {position: absolute; inset: 0; z-index: 0;background:radial-gradient(ellipse 120% 80% at 50% 60%, #1a100500 0%, #0a0a0f 70%),radial-gradient(ellipse 60% 40% at 80% 30%, #c8922a18 0%, transparent 70%),radial-gradient(ellipse 80% 60% at 20% 70%, #1b2e4b22 0%, transparent 70%);}
-.hero-grid {position: absolute; inset: 0; z-index: 0;background-image:linear-gradient(var(--border) 1px, transparent 1px),linear-gradient(90deg, var(--border) 1px, transparent 1px);background-size: 60px 60px;mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);}
+
+/* ── HERO ──────────────────────────────────────────────────────── */
+#hero {
+  position: relative; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 60%, #1a100500 0%, #0a0a0f 70%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, #c8922a18 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 20% 70%, #1b2e4b22 0%, transparent 70%);
+}
+
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+}
+
 .hero-content { position: relative; z-index: 1; text-align: center; padding: 2rem; }
-.hero-eyebrow {font-family: var(--font-mono); font-size: .75rem;letter-spacing: .3em; color: var(--gold);text-transform: uppercase; margin-bottom: 1.5rem;opacity: 0; animation: fadeUp .8s .2s forwards;}
-.hero-title {font-family: var(--font-display);font-size: clamp(5rem, 14vw, 12rem);line-height: .9; letter-spacing: .02em;color: var(--white);opacity: 0; animation: fadeUp .8s .4s forwards;}
+
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: .75rem;
+  letter-spacing: .3em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp .8s .2s forwards;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 12rem);
+  line-height: .9; letter-spacing: .02em;
+  color: var(--white);
+  opacity: 0; animation: fadeUp .8s .4s forwards;
+}
 .hero-title span { color: var(--gold); }
-.hero-sub {margin-top: 1.5rem;font-size: 1rem; color: var(--muted); font-weight: 300;letter-spacing: .05em;opacity: 0; animation: fadeUp .8s .6s forwards;}
-.hero-cta {margin-top: 3rem; display: flex; gap: 1rem; justify-content: center;opacity: 0; animation: fadeUp .8s .8s forwards;}
-.btn-primary {padding: .75rem 2rem; background: var(--gold); color: #000;font-family: var(--font-body); font-size: .85rem; font-weight: 700;letter-spacing: .1em; text-transform: uppercase;border: none; cursor: pointer; border-radius: 2px;transition: opacity .2s, transform .15s;}
+
+.hero-sub {
+  margin-top: 1.5rem;
+  font-size: 1rem; color: var(--muted); font-weight: 300;
+  letter-spacing: .05em;
+  opacity: 0; animation: fadeUp .8s .6s forwards;
+}
+
+.hero-cta {
+  margin-top: 3rem; display: flex; gap: 1rem; justify-content: center;
+  opacity: 0; animation: fadeUp .8s .8s forwards;
+}
+
+.btn-primary {
+  padding: .75rem 2rem; background: var(--gold); color: #000;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: none; cursor: pointer; border-radius: 2px;
+  transition: opacity .2s, transform .15s;
+}
 .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
-.btn-ghost {padding: .75rem 2rem; background: none;color: var(--white); font-family: var(--font-body);font-size: .85rem; font-weight: 500;letter-spacing: .1em; text-transform: uppercase;border: 1px solid var(--border-lit); cursor: pointer; border-radius: 2px;transition: border-color .2s, transform .15s;}
+
+.btn-ghost {
+  padding: .75rem 2rem; background: none;
+  color: var(--white); font-family: var(--font-body);
+  font-size: .85rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid var(--border-lit); cursor: pointer; border-radius: 2px;
+  transition: border-color .2s, transform .15s;
+}
 .btn-ghost:hover { border-color: var(--white); transform: translateY(-1px); }
-.hero-cars {position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;display: flex; gap: 1px; height: 28vh;mask-image: linear-gradient(180deg, transparent 0%, black 40%, black 80%, transparent 100%);}
-.hero-car-slot {flex: 1; overflow: hidden; position: relative;}
-.hero-car-slot::after {content: ''; position: absolute; inset: 0;background: linear-gradient(180deg, transparent 50%, var(--bg) 100%);}
-.hero-car-img {width: 100%; height: 100%; object-fit: cover;filter: grayscale(20%) brightness(.85);transition: filter .4s, transform .4s;background: linear-gradient(135deg, #111 0%, #222 100%);}
-.hero-car-slot:hover .hero-car-img {filter: grayscale(0%) brightness(.9);transform: scale(1.05);}
-.scroll-hint {position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);font-family: var(--font-mono); font-size: .65rem; letter-spacing: .2em;color: var(--muted); display: flex; flex-direction: column;align-items: center; gap: .5rem; z-index: 2;opacity: 0; animation: fadeUp .8s 1.2s forwards;}
-.scroll-line {width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);animation: scrollPulse 2s infinite;}
+
+.hero-cars {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
+  display: flex; gap: 1px; height: 28vh;
+  mask-image: linear-gradient(180deg, transparent 0%, black 40%, black 80%, transparent 100%);
+}
+
+.hero-car-slot {
+  flex: 1; overflow: hidden; position: relative;
+}
+.hero-car-slot::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, var(--bg) 100%);
+}
+
+.hero-car-img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(20%) brightness(.85);
+  transition: filter .4s, transform .4s;
+  background: linear-gradient(135deg, #111 0%, #222 100%);
+}
+.hero-car-slot:hover .hero-car-img {
+  filter: grayscale(0%) brightness(.9);
+  transform: scale(1.05);
+}
+
+.scroll-hint {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: .65rem; letter-spacing: .2em;
+  color: var(--muted); display: flex; flex-direction: column;
+  align-items: center; gap: .5rem; z-index: 2;
+  opacity: 0; animation: fadeUp .8s 1.2s forwards;
+}
+.scroll-line {
+  width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+  animation: scrollPulse 2s infinite;
+}
+
+/* ── FEATURED ──────────────────────────────────────────────────── */
 .section { padding: 6rem 3rem; max-width: 1400px; margin: 0 auto; }
-.section-header {display: flex; align-items: baseline; justify-content: space-between;margin-bottom: 3rem;border-bottom: 1px solid var(--border); padding-bottom: 1rem;}
-.section-title {font-family: var(--font-display);font-size: clamp(2rem, 5vw, 3.5rem);letter-spacing: .04em; color: var(--white);}
-.section-num {font-family: var(--font-mono); font-size: .7rem;color: var(--gold); letter-spacing: .2em;}
-.featured-grid {display: grid;grid-template-columns: repeat(3, 1fr);grid-template-rows: auto auto;gap: 1px;}
-.featured-grid .car-card:first-child {grid-column: 1 / 3;}
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: .04em; color: var(--white);
+}
+.section-num {
+  font-family: var(--font-mono); font-size: .7rem;
+  color: var(--gold); letter-spacing: .2em;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1px;
+}
+.featured-grid .car-card:first-child {
+  grid-column: 1 / 3;
+}
+
+/* ── CATALOG PAGE ──────────────────────────────────────────────── */
 #catalog-page { padding-top: 64px; }
-.catalog-header {padding: 4rem 3rem 2rem;border-bottom: 1px solid var(--border);}
-.catalog-title {font-family: var(--font-display);font-size: clamp(3rem, 8vw, 6rem);letter-spacing: .04em;}
-.catalog-count {font-family: var(--font-mono); font-size: .8rem;color: var(--muted); margin-top: .5rem;}
-.filters-bar {padding: 1.5rem 3rem;display: flex; flex-wrap: wrap; gap: 1rem;align-items: center;border-bottom: 1px solid var(--border);background: var(--surface);position: sticky; top: 64px; z-index: 50;}
-.search-box {flex: 1; min-width: 200px; max-width: 300px;display: flex; align-items: center; gap: .5rem;border: 1px solid var(--border-lit); border-radius: 2px;padding: .5rem .75rem;background: var(--bg);}
-.search-box input {background: none; border: none; outline: none;color: var(--white); font-family: var(--font-body);font-size: .85rem; width: 100%;}
+
+.catalog-header {
+  padding: 4rem 3rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.catalog-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: .04em;
+}
+.catalog-count {
+  font-family: var(--font-mono); font-size: .8rem;
+  color: var(--muted); margin-top: .5rem;
+}
+
+.filters-bar {
+  padding: 1.5rem 3rem;
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky; top: 64px; z-index: 50;
+}
+
+.search-box {
+  flex: 1; min-width: 200px; max-width: 300px;
+  display: flex; align-items: center; gap: .5rem;
+  border: 1px solid var(--border-lit); border-radius: 2px;
+  padding: .5rem .75rem;
+  background: var(--bg);
+}
+.search-box input {
+  background: none; border: none; outline: none;
+  color: var(--white); font-family: var(--font-body);
+  font-size: .85rem; width: 100%;
+}
 .search-box input::placeholder { color: var(--muted); }
 .search-icon { color: var(--muted); font-size: .9rem; }
+
 .filter-group { display: flex; gap: .4rem; flex-wrap: wrap; }
-.filter-chip {font-family: var(--font-mono); font-size: .7rem;letter-spacing: .08em; text-transform: uppercase;padding: .35rem .8rem; border-radius: 2px;border: 1px solid var(--border-lit);background: none; color: var(--muted);cursor: pointer; transition: all .2s;white-space: nowrap;}
+
+.filter-chip {
+  font-family: var(--font-mono); font-size: .7rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .35rem .8rem; border-radius: 2px;
+  border: 1px solid var(--border-lit);
+  background: none; color: var(--muted);
+  cursor: pointer; transition: all .2s;
+  white-space: nowrap;
+}
 .filter-chip:hover { border-color: var(--white); color: var(--white); }
 .filter-chip.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
-.filter-sep {width: 1px; height: 24px; background: var(--border); flex-shrink: 0;}
-.catalog-grid {display: grid;grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));gap: 1px;background: var(--border);padding: 1px;}
-.car-card {position: relative; overflow: hidden;background: var(--bg);cursor: pointer;display: flex; flex-direction: column;}
-.car-thumb {position: relative; overflow: hidden;aspect-ratio: 16/9;}
-.car-thumb img {width: 100%; height: 100%; object-fit: cover;filter: brightness(.85) saturate(.9);transition: transform .5s ease, filter .4s;background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);}
-.car-card:hover .car-thumb img {transform: scale(1.06);filter: brightness(1) saturate(1.1);}
-.car-epoch {position: absolute; top: .75rem; left: .75rem;font-family: var(--font-mono); font-size: .6rem; letter-spacing: .15em;text-transform: uppercase; padding: .25rem .6rem;background: #000000bb; color: var(--gold);border: 1px solid var(--gold-dim); border-radius: 1px;}
-.garage-toggle {position: absolute; top: .75rem; right: .75rem;width: 32px; height: 32px; border-radius: 50%;background: #000000bb; border: 1px solid var(--border-lit);display: flex; align-items: center; justify-content: center;cursor: pointer; transition: all .2s; font-size: .9rem;z-index: 2;}
+
+.filter-sep {
+  width: 1px; height: 24px; background: var(--border); flex-shrink: 0;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  padding: 1px;
+}
+
+/* ── CAR CARD ──────────────────────────────────────────────────── */
+.car-card {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  cursor: pointer;
+  display: flex; flex-direction: column;
+}
+
+.car-thumb {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/9;
+}
+.car-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.85) saturate(.9);
+  transition: transform .5s ease, filter .4s;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+.car-card:hover .car-thumb img {
+  transform: scale(1.06);
+  filter: brightness(1) saturate(1.1);
+}
+
+.car-epoch {
+  position: absolute; top: .75rem; left: .75rem;
+  font-family: var(--font-mono); font-size: .6rem; letter-spacing: .15em;
+  text-transform: uppercase; padding: .25rem .6rem;
+  background: #000000bb; color: var(--gold);
+  border: 1px solid var(--gold-dim); border-radius: 1px;
+}
+
+.garage-toggle {
+  position: absolute; top: .75rem; right: .75rem;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #000000bb; border: 1px solid var(--border-lit);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .2s; font-size: .9rem;
+  z-index: 2;
+}
 .garage-toggle:hover { border-color: var(--gold); }
 .garage-toggle.saved { background: var(--gold-dim); border-color: var(--gold); }
-.car-info {padding: 1.25rem 1.5rem 1.5rem;display: flex; flex-direction: column; gap: .25rem; flex: 1;}
-.car-make {font-family: var(--font-mono); font-size: .65rem;letter-spacing: .2em; color: var(--muted); text-transform: uppercase;}
-.car-name {font-family: var(--font-display);font-size: 1.6rem; letter-spacing: .04em; line-height: 1;color: var(--white);}
-.car-year {font-family: var(--font-mono); font-size: .75rem; color: var(--muted);margin-top: .25rem;}
-.car-tagline {font-size: .8rem; color: var(--muted); margin-top: .5rem;line-height: 1.5; font-style: italic;}
-.car-specs-row {display: flex; gap: 1.5rem; margin-top: auto; padding-top: 1rem;border-top: 1px solid var(--border);}
+
+.car-info {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex; flex-direction: column; gap: .25rem; flex: 1;
+}
+.car-make {
+  font-family: var(--font-mono); font-size: .65rem;
+  letter-spacing: .2em; color: var(--muted); text-transform: uppercase;
+}
+.car-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem; letter-spacing: .04em; line-height: 1;
+  color: var(--white);
+}
+.car-year {
+  font-family: var(--font-mono); font-size: .75rem; color: var(--muted);
+  margin-top: .25rem;
+}
+.car-tagline {
+  font-size: .8rem; color: var(--muted); margin-top: .5rem;
+  line-height: 1.5; font-style: italic;
+}
+
+.car-specs-row {
+  display: flex; gap: 1.5rem; margin-top: auto; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
 .spec-item { display: flex; flex-direction: column; gap: .1rem; }
-.spec-val {font-family: var(--font-mono); font-size: .85rem;color: var(--white); font-weight: 500;}
-.spec-key {font-family: var(--font-mono); font-size: .55rem;letter-spacing: .15em; color: var(--muted); text-transform: uppercase;}
-.card-overlay {position: absolute; inset: 0; background: transparent;transition: background .3s;}
+.spec-val {
+  font-family: var(--font-mono); font-size: .85rem;
+  color: var(--white); font-weight: 500;
+}
+.spec-key {
+  font-family: var(--font-mono); font-size: .55rem;
+  letter-spacing: .15em; color: var(--muted); text-transform: uppercase;
+}
+
+.card-overlay {
+  position: absolute; inset: 0; background: transparent;
+  transition: background .3s;
+}
 .car-card:hover .card-overlay { background: #ffffff06; }
-.modal-backdrop {display: none; position: fixed; inset: 0; z-index: 200;background: #000000cc;backdrop-filter: blur(8px);animation: fadeIn .2s;}
+
+/* ── CAR DETAIL MODAL ──────────────────────────────────────────── */
+.modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: #000000cc;
+  backdrop-filter: blur(8px);
+  animation: fadeIn .2s;
+}
 .modal-backdrop.open { display: flex; }
-.modal {margin: auto;width: min(900px, 96vw);max-height: 90vh;overflow-y: auto;background: var(--surface);border: 1px solid var(--border-lit);border-radius: 4px;position: relative;animation: slideUp .3s ease;}
-.modal-hero {position: relative; aspect-ratio: 16/7; overflow: hidden;}
-.modal-hero img {width: 100%; height: 100%; object-fit: cover;filter: brightness(.8);}
-.modal-hero-overlay {position: absolute; inset: 0;background: linear-gradient(to top, var(--surface) 0%, transparent 60%);}
-.modal-epoch {position: absolute; top: 1rem; left: 1rem;font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em;text-transform: uppercase; padding: .3rem .7rem;background: #000000cc; color: var(--gold);border: 1px solid var(--gold-dim); border-radius: 1px;}
-.modal-close {position: absolute; top: 1rem; right: 1rem;width: 36px; height: 36px; border-radius: 50%;background: #000000bb; border: 1px solid var(--border-lit);color: var(--white); font-size: 1.1rem;display: flex; align-items: center; justify-content: center;cursor: pointer; transition: border-color .2s;}
+
+.modal {
+  margin: auto;
+  width: min(900px, 96vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border-lit);
+  border-radius: 4px;
+  position: relative;
+  animation: slideUp .3s ease;
+}
+
+.modal-hero {
+  position: relative; aspect-ratio: 16/7; overflow: hidden;
+}
+.modal-hero img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.8);
+}
+.modal-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--surface) 0%, transparent 60%);
+}
+.modal-epoch {
+  position: absolute; top: 1rem; left: 1rem;
+  font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em;
+  text-transform: uppercase; padding: .3rem .7rem;
+  background: #000000cc; color: var(--gold);
+  border: 1px solid var(--gold-dim); border-radius: 1px;
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #000000bb; border: 1px solid var(--border-lit);
+  color: var(--white); font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color .2s;
+}
 .modal-close:hover { border-color: var(--white); }
+
 .modal-body { padding: 2rem 2.5rem 2.5rem; }
-.modal-make {font-family: var(--font-mono); font-size: .7rem;letter-spacing: .2em; color: var(--gold); text-transform: uppercase;}
-.modal-title {font-family: var(--font-display);font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: .04em;line-height: 1; margin-top: .25rem;}
-.modal-year {font-family: var(--font-mono); font-size: .8rem;color: var(--muted); margin-top: .4rem;}
-.modal-specs {display: grid; grid-template-columns: repeat(4, 1fr);gap: 1px; background: var(--border);margin: 1.5rem 0;border: 1px solid var(--border);}
-.modal-spec {background: var(--bg);padding: 1rem 1.25rem;display: flex; flex-direction: column; gap: .25rem;}
-.modal-spec-val {font-family: var(--font-mono); font-size: 1.1rem;color: var(--white); font-weight: 500;}
-.modal-spec-key {font-family: var(--font-mono); font-size: .55rem;letter-spacing: .15em; color: var(--muted); text-transform: uppercase;}
-.modal-story {font-size: .9rem; line-height: 1.8; color: #b8b0a8;margin-bottom: 1.5rem;}
+.modal-make {
+  font-family: var(--font-mono); font-size: .7rem;
+  letter-spacing: .2em; color: var(--gold); text-transform: uppercase;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: .04em;
+  line-height: 1; margin-top: .25rem;
+}
+.modal-year {
+  font-family: var(--font-mono); font-size: .8rem;
+  color: var(--muted); margin-top: .4rem;
+}
+
+.modal-specs {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+}
+.modal-spec {
+  background: var(--bg);
+  padding: 1rem 1.25rem;
+  display: flex; flex-direction: column; gap: .25rem;
+}
+.modal-spec-val {
+  font-family: var(--font-mono); font-size: 1.1rem;
+  color: var(--white); font-weight: 500;
+}
+.modal-spec-key {
+  font-family: var(--font-mono); font-size: .55rem;
+  letter-spacing: .15em; color: var(--muted); text-transform: uppercase;
+}
+
+.modal-story {
+  font-size: .9rem; line-height: 1.8; color: #b8b0a8;
+  margin-bottom: 1.5rem;
+}
 .modal-story p + p { margin-top: 1rem; }
+
 .modal-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; }
-.tag {font-family: var(--font-mono); font-size: .65rem;letter-spacing: .1em; text-transform: uppercase;padding: .25rem .65rem; border: 1px solid var(--border-lit);border-radius: 1px; color: var(--muted);}
-.modal-footer {display: flex; justify-content: space-between; align-items: center;padding-top: 1.5rem; border-top: 1px solid var(--border);}
+.tag {
+  font-family: var(--font-mono); font-size: .65rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .25rem .65rem; border: 1px solid var(--border-lit);
+  border-radius: 1px; color: var(--muted);
+}
+
+.modal-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1.5rem; border-top: 1px solid var(--border);
+}
+
+/* ── GARAGE PAGE ───────────────────────────────────────────────── */
 #garage-page { padding-top: 64px; min-height: 100vh; }
 .garage-header { padding: 4rem 3rem 2rem; border-bottom: 1px solid var(--border); }
 .garage-title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); }
-.garage-empty {text-align: center; padding: 8rem 2rem;color: var(--muted);}
+
+.garage-empty {
+  text-align: center; padding: 8rem 2rem;
+  color: var(--muted);
+}
 .garage-empty-icon { font-size: 4rem; margin-bottom: 1rem; opacity: .3; }
-.garage-empty h3 {font-family: var(--font-display); font-size: 2rem; color: var(--white);margin-bottom: .5rem;}
+.garage-empty h3 {
+  font-family: var(--font-display); font-size: 2rem; color: var(--white);
+  margin-bottom: .5rem;
+}
+
+/* ── ABOUT PAGE ────────────────────────────────────────────────── */
 #about-page { padding-top: 64px; }
 .about-wrap { max-width: 700px; margin: 0 auto; padding: 6rem 3rem; }
-.about-kicker {font-family: var(--font-mono); font-size: .7rem; letter-spacing: .25em;color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;}
-.about-title {font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5rem);line-height: .95; margin-bottom: 2rem;}
+.about-kicker {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .25em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+}
+.about-title {
+  font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: .95; margin-bottom: 2rem;
+}
 .about-body { font-size: .95rem; line-height: 1.9; color: #b8b0a8; }
 .about-body p + p { margin-top: 1.2rem; }
-.about-divider {height: 1px; background: var(--border); margin: 2.5rem 0;}
+.about-divider {
+  height: 1px; background: var(--border); margin: 2.5rem 0;
+}
 .criteria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0; }
 .criteria-item { background: var(--bg); padding: 1.25rem 1.5rem; }
 .criteria-num { font-family: var(--font-mono); font-size: .65rem; color: var(--gold); letter-spacing: .2em; }
 .criteria-title { font-family: var(--font-display); font-size: 1.2rem; margin: .25rem 0 .4rem; }
 .criteria-desc { font-size: .8rem; color: var(--muted); line-height: 1.5; }
-footer {border-top: 1px solid var(--border);padding: 2rem 3rem;display: flex; justify-content: space-between; align-items: center;}
+
+/* ── FOOTER ────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
 .footer-logo { font-family: var(--font-display); font-size: 1.2rem; }
 .footer-logo span { color: var(--gold); }
 .footer-text { font-family: var(--font-mono); font-size: .65rem; color: var(--muted); letter-spacing: .1em; }
-.compare-bar {position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;background: var(--surface); border-top: 1px solid var(--border-lit);padding: 1rem 3rem;display: flex; align-items: center; gap: 1.5rem;transform: translateY(100%); transition: transform .3s;}
+
+/* ── COMPARE BAR ───────────────────────────────────────────────── */
+.compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+  background: var(--surface); border-top: 1px solid var(--border-lit);
+  padding: 1rem 3rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  transform: translateY(100%); transition: transform .3s;
+}
 .compare-bar.visible { transform: translateY(0); }
 .compare-slots { display: flex; gap: 1rem; flex: 1; }
-.compare-slot {display: flex; align-items: center; gap: .75rem;border: 1px dashed var(--border-lit); border-radius: 2px;padding: .5rem 1rem; min-width: 200px;font-family: var(--font-mono); font-size: .75rem; color: var(--muted);}
+.compare-slot {
+  display: flex; align-items: center; gap: .75rem;
+  border: 1px dashed var(--border-lit); border-radius: 2px;
+  padding: .5rem 1rem; min-width: 200px;
+  font-family: var(--font-mono); font-size: .75rem; color: var(--muted);
+}
 .compare-slot.filled { border-color: var(--gold-dim); }
 .compare-slot-name { color: var(--white); }
-.compare-remove {background: none; border: none; color: var(--muted);cursor: pointer; font-size: .9rem; line-height: 1;margin-left: auto;transition: color .2s;}
+.compare-remove {
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: .9rem; line-height: 1;
+  margin-left: auto;
+  transition: color .2s;
+}
 .compare-remove:hover { color: var(--red); }
 .compare-label { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; color: var(--muted); }
-.compare-modal {display: none; position: fixed; inset: 0; z-index: 300;background: #000000ee; overflow-y: auto;animation: fadeIn .2s;}
+
+/* ── COMPARE MODAL ─────────────────────────────────────────────── */
+.compare-modal {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: #000000ee; overflow-y: auto;
+  animation: fadeIn .2s;
+}
 .compare-modal.open { display: block; }
 .compare-wrap { max-width: 900px; margin: 4rem auto; padding: 2rem; }
-.compare-close-btn {background: none; border: 1px solid var(--border-lit); color: var(--white);font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em;padding: .5rem 1.2rem; cursor: pointer; border-radius: 2px;margin-bottom: 2rem;transition: border-color .2s;}
+.compare-close-btn {
+  background: none; border: 1px solid var(--border-lit); color: var(--white);
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em;
+  padding: .5rem 1.2rem; cursor: pointer; border-radius: 2px;
+  margin-bottom: 2rem;
+  transition: border-color .2s;
+}
 .compare-close-btn:hover { border-color: var(--white); }
 .compare-title { font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem; }
-.compare-images {display: grid; grid-template-columns: 1fr 1fr;gap: 1px; background: var(--border); margin-bottom: 1px;}
+.compare-images {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border); margin-bottom: 1px;
+}
 .compare-img { aspect-ratio: 16/9; overflow: hidden; }
 .compare-img img { width: 100%; height: 100%; object-fit: cover; }
-.compare-table {display: grid; grid-template-columns: auto 1fr 1fr;gap: 1px; background: var(--border); border: 1px solid var(--border);}
-.compare-cell {background: var(--surface); padding: .85rem 1.25rem;font-family: var(--font-mono); font-size: .8rem;}
+.compare-table {
+  display: grid; grid-template-columns: auto 1fr 1fr;
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+}
+.compare-cell {
+  background: var(--surface); padding: .85rem 1.25rem;
+  font-family: var(--font-mono); font-size: .8rem;
+}
 .compare-cell.key { color: var(--muted); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; }
 .compare-cell.val { color: var(--white); }
 .compare-cell.header { background: var(--bg); color: var(--gold); font-weight: 500; }
-@keyframes fadeUp {from { opacity: 0; transform: translateY(20px); }to   { opacity: 1; transform: translateY(0); }}
-@keyframes fadeIn {from { opacity: 0; } to { opacity: 1; }}
-@keyframes slideUp {from { opacity: 0; transform: translateY(30px); }to   { opacity: 1; transform: translateY(0); }}
-@keyframes scrollPulse {0%, 100% { opacity: .3; } 50% { opacity: 1; }}
-.reveal {opacity: 0; transform: translateY(24px);transition: opacity .6s ease, transform .6s ease;}
+
+/* ── ANIMATIONS ────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: .3; } 50% { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.car-thumb .no-photo {opacity: 0 !important;}
-.car-thumb:has(.no-photo)::after {content: attr(data-name);position: absolute; inset: 0;display: flex; align-items: center; justify-content: center;font-family: var(--font-display);font-size: 1.2rem; letter-spacing: .1em;color: var(--muted); text-align: center; padding: 1rem;background: linear-gradient(135deg, #111 0%, #1a1a2a 100%);}
-.btn-add-car {font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em;background: var(--gold); color: #000; border: none;padding: .38rem .9rem; border-radius: 2px; cursor: pointer;font-weight: 700; transition: opacity .2s, transform .15s;}
+
+
+.car-thumb .no-photo {
+  opacity: 0 !important;
+}
+.car-thumb:has(.no-photo)::after {
+  content: attr(data-name);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem; letter-spacing: .1em;
+  color: var(--muted); text-align: center; padding: 1rem;
+  background: linear-gradient(135deg, #111 0%, #1a1a2a 100%);
+}
+
+/* ── ADD CAR BUTTON ────────────────────────────────────────────── */
+.btn-add-car {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em;
+  background: var(--gold); color: #000; border: none;
+  padding: .38rem .9rem; border-radius: 2px; cursor: pointer;
+  font-weight: 700; transition: opacity .2s, transform .15s;
+}
 .btn-add-car:hover { opacity: .85; transform: translateY(-1px); }
-.add-modal-backdrop {display: none; position: fixed; inset: 0; z-index: 250;background: #000000cc; backdrop-filter: blur(8px);align-items: flex-start; justify-content: center;overflow-y: auto; padding: 2rem 1rem;}
+
+/* ── ADD CAR MODAL ─────────────────────────────────────────────── */
+.add-modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 250;
+  background: #000000cc; backdrop-filter: blur(8px);
+  align-items: flex-start; justify-content: center;
+  overflow-y: auto; padding: 2rem 1rem;
+}
 .add-modal-backdrop.open { display: flex; }
-.add-modal {width: min(680px, 100%);background: var(--surface);border: 1px solid var(--border-lit);border-radius: 4px;animation: slideUp .3s ease;margin: auto;}
-.add-modal-header {padding: 1.5rem 2rem 1rem;border-bottom: 1px solid var(--border);display: flex; justify-content: space-between; align-items: center;}
-.add-modal-title {font-family: var(--font-display); font-size: 2rem;letter-spacing: .04em; color: var(--white);}
-.add-modal-close {width: 32px; height: 32px; border-radius: 50%;background: none; border: 1px solid var(--border-lit);color: var(--white); cursor: pointer; font-size: 1rem;display: flex; align-items: center; justify-content: center;transition: border-color .2s;}
+.add-modal {
+  width: min(680px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border-lit);
+  border-radius: 4px;
+  animation: slideUp .3s ease;
+  margin: auto;
+}
+.add-modal-header {
+  padding: 1.5rem 2rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.add-modal-title {
+  font-family: var(--font-display); font-size: 2rem;
+  letter-spacing: .04em; color: var(--white);
+}
+.add-modal-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: none; border: 1px solid var(--border-lit);
+  color: var(--white); cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s;
+}
 .add-modal-close:hover { border-color: var(--white); }
 .add-modal-body { padding: 1.5rem 2rem 2rem; }
-.form-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;}
+
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
 .form-group { display: flex; flex-direction: column; gap: .4rem; }
 .form-group.full { grid-column: 1 / -1; }
-.form-label {font-family: var(--font-mono); font-size: .62rem;letter-spacing: .15em; color: var(--muted); text-transform: uppercase;}
-.form-input, .form-select, .form-textarea {background: var(--bg); border: 1px solid var(--border-lit);color: var(--white); font-family: var(--font-body); font-size: .88rem;padding: .6rem .8rem; border-radius: 2px;outline: none; transition: border-color .2s;width: 100%;}
-.form-input:focus, .form-select:focus, .form-textarea:focus {border-color: var(--gold);}
+.form-label {
+  font-family: var(--font-mono); font-size: .62rem;
+  letter-spacing: .15em; color: var(--muted); text-transform: uppercase;
+}
+.form-input, .form-select, .form-textarea {
+  background: var(--bg); border: 1px solid var(--border-lit);
+  color: var(--white); font-family: var(--font-body); font-size: .88rem;
+  padding: .6rem .8rem; border-radius: 2px;
+  outline: none; transition: border-color .2s;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+}
 .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
 .form-select { appearance: none; cursor: pointer; }
 .form-select option { background: var(--surface); }
 .form-textarea { resize: vertical; min-height: 80px; }
-.photo-drop {grid-column: 1 / -1;border: 2px dashed var(--border-lit); border-radius: 3px;padding: 2rem; text-align: center; cursor: pointer;transition: border-color .2s, background .2s;position: relative;}
-.photo-drop:hover, .photo-drop.drag-over {border-color: var(--gold); background: var(--gold-dim);}
-.photo-drop input[type=file] {position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;}
+
+.photo-drop {
+  grid-column: 1 / -1;
+  border: 2px dashed var(--border-lit); border-radius: 3px;
+  padding: 2rem; text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s;
+  position: relative;
+}
+.photo-drop:hover, .photo-drop.drag-over {
+  border-color: var(--gold); background: var(--gold-dim);
+}
+.photo-drop input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+}
 .photo-drop-icon { font-size: 2rem; margin-bottom: .5rem; }
-.photo-drop-text {font-family: var(--font-mono); font-size: .7rem;letter-spacing: .1em; color: var(--muted); text-transform: uppercase;}
-.photo-drop-preview {display: none; max-height: 160px; border-radius: 2px;object-fit: cover; width: 100%;}
+.photo-drop-text {
+  font-family: var(--font-mono); font-size: .7rem;
+  letter-spacing: .1em; color: var(--muted); text-transform: uppercase;
+}
+.photo-drop-preview {
+  display: none; max-height: 160px; border-radius: 2px;
+  object-fit: cover; width: 100%;
+}
+
 .form-divider { grid-column: 1/-1; height: 1px; background: var(--border); margin: .5rem 0; }
-.form-actions {display: flex; justify-content: flex-end; gap: .75rem;margin-top: 1.5rem; padding-top: 1.5rem;border-top: 1px solid var(--border);}
-.toast {position: fixed; bottom: 2rem; right: 2rem; z-index: 400;background: var(--surface); border: 1px solid var(--gold);color: var(--white); padding: .85rem 1.5rem;border-radius: 3px; font-family: var(--font-mono); font-size: .8rem;transform: translateY(120%); transition: transform .3s ease;display: flex; align-items: center; gap: .75rem;}
+
+.form-actions {
+  display: flex; justify-content: flex-end; gap: .75rem;
+  margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+  background: var(--surface); border: 1px solid var(--gold);
+  color: var(--white); padding: .85rem 1.5rem;
+  border-radius: 3px; font-family: var(--font-mono); font-size: .8rem;
+  transform: translateY(120%); transition: transform .3s ease;
+  display: flex; align-items: center; gap: .75rem;
+}
 .toast.show { transform: translateY(0); }
 .toast-icon { font-size: 1.1rem; }
+
+/* ── CONTACT PAGE ──────────────────────────────────────────────── */
 #contact-page { padding-top: 64px; }
 .contact-wrap { max-width: 860px; margin: 0 auto; padding: 5rem 3rem 6rem; }
-.contact-kicker {font-family: var(--font-mono); font-size: .7rem; letter-spacing: .25em;color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;}
-.contact-title {font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5rem);line-height: .95; margin-bottom: .75rem;}
+.contact-kicker {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .25em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+}
+.contact-title {
+  font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: .95; margin-bottom: .75rem;
+}
 .contact-sub { font-size: .95rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.6; }
+
 .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3rem; }
+
 .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
-.contact-card {border: 1px solid var(--border-lit); border-radius: 3px;padding: 1.25rem 1.5rem;transition: border-color .2s;}
+.contact-card {
+  border: 1px solid var(--border-lit); border-radius: 3px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color .2s;
+}
 .contact-card:hover { border-color: var(--gold-dim); }
-.contact-card-label {font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;color: var(--muted); text-transform: uppercase; margin-bottom: .4rem;}
-.contact-card-val {font-size: .95rem; color: var(--white); word-break: break-all;}
+.contact-card-label {
+  font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: .4rem;
+}
+.contact-card-val {
+  font-size: .95rem; color: var(--white); word-break: break-all;
+}
 .contact-card-val a { color: var(--gold); text-decoration: none; }
 .contact-card-val a:hover { text-decoration: underline; }
 .contact-card-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
 .contact-form .form-label { color: var(--muted); }
-.contact-status {font-family: var(--font-mono); font-size: .75rem; color: var(--gold);display: none; margin-top: .5rem;}
-@media (max-width: 768px) {nav { padding: 1rem 1.25rem; flex-direction: column; height: auto; gap: 1rem; }.nav-links { gap: 0.6rem; flex-wrap: wrap; justify-content: center; }.nav-links a { font-size: 0.7rem; }#catalog-page, #garage-page, #about-page, #contact-page { padding-top: 110px; }.filters-bar { top: 110px; }.hero-title { font-size: clamp(2.8rem, 10vw, 5rem); }.hero-cta { flex-direction: column; width: 100%; max-width: 280px; gap: 0.75rem; }.btn-primary, .btn-ghost { width: 100%; text-align: center; }.hero-car-slot:nth-child(n+4) { display: none; }.section { padding: 4rem 1.25rem; }.catalog-header, .filters-bar, .garage-header, footer { padding-left: 1.25rem; padding-right: 1.25rem; }.featured-grid { grid-template-columns: 1fr; }.featured-grid .car-card:first-child { grid-column: 1; }.modal-specs { grid-template-columns: repeat(2, 1fr); }.criteria-grid { grid-template-columns: 1fr; }.compare-bar { padding: 1rem 1.25rem; }.compare-slots { flex-direction: column; }.compare-images { grid-template-columns: 1fr; }.compare-wrap { margin: 2rem auto; padding: 1.25rem; }.contact-layout { grid-template-columns: 1fr; gap: 2rem; }.form-grid { grid-template-columns: 1fr; }}
+.contact-status {
+  font-family: var(--font-mono); font-size: .75rem; color: var(--gold);
+  display: none; margin-top: .5rem;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; flex-direction: column; height: auto; gap: 1rem; }
+  .nav-links { gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+  .nav-links a { font-size: 0.7rem; }
+  #catalog-page, #garage-page, #about-page, #contact-page { padding-top: 110px; }
+  .filters-bar { top: 110px; }
+  .hero-title { font-size: clamp(2.8rem, 10vw, 5rem); }
+  .hero-cta { flex-direction: column; width: 100%; max-width: 280px; gap: 0.75rem; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; }
+  .hero-car-slot:nth-child(n+4) { display: none; }
+  .section { padding: 4rem 1.25rem; }
+  .catalog-header, .filters-bar, .garage-header, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .featured-grid .car-card:first-child { grid-column: 1; }
+  .modal-specs { grid-template-columns: repeat(2, 1fr); }
+  .criteria-grid { grid-template-columns: 1fr; }
+  .compare-bar { padding: 1rem 1.25rem; }
+  .compare-slots { flex-direction: column; }
+  .compare-images { grid-template-columns: 1fr; }
+  .compare-wrap { margin: 2rem auto; padding: 1.25rem; }
+  .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .form-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
-<nav id="main-nav"><div class="nav-logo" onclick="showPage('home')">Motor<span>Dreams</span></div><div class="nav-links"><a onclick="showPage('home')" id="nav-home" class="active">Главная</a><a onclick="showPage('catalog')" id="nav-catalog">Каталог</a><a onclick="showPage('about')" id="nav-about">О проекте</a><a onclick="showPage('contact')" id="nav-contact">Контакт</a><button class="btn-add-car" onclick="openAddCar()" title="Добавить автомобиль">+ Авто</button><button class="garage-btn" onclick="showPage('garage')">🚗 Мой гараж <span class="garage-count" id="garage-count">0</span></button></div></nav>
-<div id="home-page" class="page active"><section id="hero"><div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-content"><div class="hero-eyebrow">Виртуальный музей &mdash; 15 легенд</div><h1 class="hero-title">Motor<span>Dreams</span></h1><p class="hero-sub">От Cadillac Eldorado до Koenigsegg Agera &mdash; три эпохи, один гараж</p><div class="hero-cta"><button class="btn-primary" onclick="showPage('catalog')">Смотреть коллекцию</button><button class="btn-ghost" onclick="showPage('about')">О проекте</button></div></div><div class="hero-cars" id="hero-cars"></div><div class="scroll-hint"><div class="scroll-line"></div><span>SCROLL</span></div></section><div class="section"><div class="section-header"><h2 class="section-title">Лучшие экспонаты</h2><span class="section-num">01 / Коллекция</span></div><div class="featured-grid" id="featured-grid"></div></div><div style="border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface);"><div style="max-width:1400px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border);"><div style="background:var(--surface); padding:2.5rem 3rem;"><div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">15</div><div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Легендарных авто</div></div><div style="background:var(--surface); padding:2.5rem 3rem;"><div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">3</div><div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Эпохи автопрома</div></div><div style="background:var(--surface); padding:2.5rem 3rem;"><div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">6</div><div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Стран производителей</div></div><div style="background:var(--surface); padding:2.5rem 3rem;"><div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">∞</div><div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Часов восхищения</div></div></div></div><footer><div class="footer-logo">Motor<span>Dreams</span></div><div class="footer-text">Проектная работа &bull; 2025</div></footer></div>
-<div id="catalog-page" class="page"><div class="catalog-header"><h1 class="catalog-title">Каталог</h1><p class="catalog-count" id="catalog-count">Загрузка...</p></div><div class="filters-bar"><div class="search-box"><span class="search-icon">⌕</span><input type="text" id="search-input" placeholder="Поиск по названию..."></div><div class="filter-sep"></div><div class="filter-group" id="epoch-filters"><button class="filter-chip active" data-filter="epoch" data-val="all">Все эпохи</button><button class="filter-chip" data-filter="epoch" data-val="retro">Ретро</button><button class="filter-chip" data-filter="epoch" data-val="golden">Золотая эра</button><button class="filter-chip" data-filter="epoch" data-val="modern">Современные</button></div><div class="filter-sep"></div><div class="filter-group" id="country-filters"><button class="filter-chip active" data-filter="country" data-val="all">Все страны</button><button class="filter-chip" data-filter="country" data-val="США">США</button><button class="filter-chip" data-filter="country" data-val="Германия">Германия</button><button class="filter-chip" data-filter="country" data-val="Италия">Италия</button><button class="filter-chip" data-filter="country" data-val="Япония">Япония</button><button class="filter-chip" data-filter="country" data-val="Швеция">Швеция</button><button class="filter-chip" data-filter="country" data-val="Великобритания">Великобритания</button></div></div><div class="catalog-grid" id="catalog-grid"></div><footer><div class="footer-logo">Motor<span>Dreams</span></div><div class="footer-text">Проектная работа &bull; 2025</div></footer></div>
-<div id="garage-page" class="page"><div class="garage-header"><div style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem;">Персональная коллекция</div><h1 class="garage-title">Мой Гараж</h1><p style="font-family:var(--font-mono); font-size:.8rem; color:var(--muted); margin-top:.5rem;" id="garage-subtitle"></p></div><div id="garage-grid" style="padding:1px; background:var(--border);"></div><div id="garage-empty" class="garage-empty" style="display:none;"><div class="garage-empty-icon">🏎</div><h3>Гараж пустой</h3><p style="margin-bottom:2rem;">Добавляйте автомобили из каталога — нажмите ❤ на любой карточке</p><button class="btn-primary" onclick="showPage('catalog')">Открыть каталог</button></div><footer><div class="footer-logo">Motor<span>Dreams</span></div><div class="footer-text">Проектная работа &bull; 2025</div></footer></div>
-<div id="about-page" class="page"><div class="about-wrap"><div class="about-kicker">О проекте</div><h1 class="about-title">MotorDreams Collection</h1><div class="about-body"><p>Идея этого проекта появилась из простого наблюдения: коллекционировать автомобили в реальной жизни могут единицы, но восхищаться ими — абсолютно все. Кто-то мечтал о Ferrari в детстве, кто-то вырос рядом с «шестёркой» и считает её самой настоящей машиной мечты.</p><p>Виртуальная коллекция — это способ собрать всё это разнообразие в одном месте, где каждый найдёт что-то своё. 15 автомобилей трёх эпох: от довоенной классики до современных гиперкаров.</p></div><div class="about-divider"></div><div style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:1rem;">Критерии отбора</div><div class="criteria-grid"><div class="criteria-item"><div class="criteria-num">01</div><div class="criteria-title">Историческая значимость</div><div class="criteria-desc">Первопроходцы, автомобили, изменившие рынок, «законодатели моды»</div></div><div class="criteria-item"><div class="criteria-num">02</div><div class="criteria-title">Техническая уникальность</div><div class="criteria-desc">Необычные двигатели, революционная трансмиссия, экспериментальные материалы</div></div><div class="criteria-item"><div class="criteria-num">03</div><div class="criteria-title">Культовый статус</div><div class="criteria-desc">Автомобили из фильмов, машины-символы целых эпох</div></div><div class="criteria-item"><div class="criteria-num">04</div><div class="criteria-title">Визуальная привлекательность</div><div class="criteria-desc">Мировые премии дизайна и то, что реально цепляет взгляд</div></div></div><div class="about-divider"></div><div style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:1rem;">Технологии</div><div class="about-body"><p>Сайт написан на чистом HTML5, CSS3 и JavaScript — без фреймворков. Адаптивный дизайн работает на любом устройстве. Личный гараж сохраняется в localStorage браузера.</p></div><div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;"><span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">HTML5</span><span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">CSS3</span><span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">JavaScript</span><span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">LocalStorage</span><span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">Адаптивная вёрстка</span></div></div><footer><div class="footer-logo">Motor<span>Dreams</span></div><div class="footer-text">Проектная работа &bull; 2025</div></footer></div>
-<div id="contact-page" class="page"><div class="contact-wrap"><div class="contact-kicker">Связь с разработчиком</div><h1 class="contact-title">Напишите нам</h1><p class="contact-sub">Нашли ошибку, хотите предложить новый автомобиль для коллекции<br>или просто хотите сказать что-то приятное — пишите.</p><div class="contact-layout"><div class="contact-info"><div class="contact-card"><div class="contact-card-icon">✉️</div><div class="contact-card-label">Email</div><div class="contact-card-val"><a href="mailto:zenakrasilov40@gmail.com">zenakrasilov40@gmail.com</a></div></div><div class="contact-card"><div class="contact-card-icon">💬</div><div class="contact-card-label">Telegram</div><div class="contact-card-val"><a href="https://t.me/DQOEYFHGRU" target="_blank">@DQOEYFHGRU</a></div></div><div class="contact-card"><div class="contact-card-icon">🐙</div><div class="contact-card-label">GitHub</div><div class="contact-card-val"><a href="https://github.com/Set90" target="_blank">github.com/Set90</a></div></div><div class="contact-card"><div class="contact-card-icon">⏱</div><div class="contact-card-label">Время ответа</div><div class="contact-card-val" style="color:var(--muted); font-size:.85rem;">Обычно отвечаем в течение 24 часов</div></div></div><div class="contact-form"><div class="form-group"><label class="form-label">Ваше имя</label><input class="form-input" id="c-name" placeholder="Иван Петров" autocomplete="off"></div><div class="form-group"><label class="form-label">Email для ответа</label><input class="form-input" id="c-email" type="email" placeholder="ivan@mail.ru"></div><div class="form-group"><label class="form-label">Тема</label><select class="form-select" id="c-topic"><option value="">Выберите тему...</option><option value="bug">🐛 Нашёл ошибку</option><option value="car">🚗 Предложить автомобиль</option><option value="idea">💡 Идея для сайта</option><option value="collab">🤝 Сотрудничество</option><option value="other">💬 Другое</option></select></div><div class="form-group"><label class="form-label">Сообщение</label><textarea class="form-textarea" id="c-message" rows="5" placeholder="Опишите вашу мысль подробнее..."></textarea></div><div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;"><button class="btn-primary" onclick="submitContact()" style="min-width:140px;">Отправить →</button><div class="contact-status" id="contact-status"></div></div><p style="font-family:var(--font-mono); font-size:.62rem; color:var(--muted); margin-top:.5rem; line-height:1.6;">Форма сохраняет сообщение локально и открывает ваш почтовый клиент.<br>Ваши данные никуда не передаются автоматически.</p></div></div></div><footer><div class="footer-logo">Motor<span>Dreams</span></div><div class="footer-text">Проектная работа &bull; 2025</div></footer></div>
-<div class="add-modal-backdrop" id="add-car-modal" onclick="closeAddCarOutside(event)"><div class="add-modal"><div class="add-modal-header"><div class="add-modal-title">Новый автомобиль</div><button class="add-modal-close" onclick="closeAddCar()">✕</button></div><div class="add-modal-body"><div class="form-grid"><div class="form-group full"><label class="form-label">Фотография</label><div class="photo-drop" id="photo-drop"><input type="file" id="photo-file" accept="image/*" onchange="handlePhotoSelect(this)"><img class="photo-drop-preview" id="photo-preview"><div id="photo-drop-inner"><div class="photo-drop-icon">📷</div><div class="photo-drop-text">Нажмите или перетащите фото сюда</div><div style="font-family:var(--font-mono); font-size:.6rem; color:var(--muted); margin-top:.4rem; letter-spacing:.05em;">JPG, PNG, WEBP · до 5 МБ</div></div></div></div><div class="form-group"><label class="form-label">Марка *</label><input class="form-input" id="f-make" placeholder="Ferrari"></div><div class="form-group"><label class="form-label">Модель *</label><input class="form-input" id="f-model" placeholder="Testarossa"></div><div class="form-group"><label class="form-label">Год выпуска *</label><input class="form-input" id="f-year" placeholder="1984–1991"></div><div class="form-group"><label class="form-label">Страна</label><select class="form-select" id="f-country"><option value="Италия">Италия</option><option value="Германия">Германия</option><option value="США">США</option><option value="Япония">Япония</option><option value="Великобритания">Великобритания</option><option value="Франция">Франция</option><option value="Швеция">Швеция</option><option value="Другая">Другая</option></select></div><div class="form-group full"><label class="form-label">Эпоха</label><div style="display:flex; gap:.5rem; flex-wrap:wrap;"><button class="filter-chip active" data-epoch="retro" onclick="selectEpoch(this)">Ретро-классика</button><button class="filter-chip" data-epoch="golden" onclick="selectEpoch(this)">Золотая эра</button><button class="filter-chip" data-epoch="modern" onclick="selectEpoch(this)">Современные</button></div></div><div class="form-divider"></div><div class="form-group"><label class="form-label">Мощность</label><input class="form-input" id="f-power" placeholder="390 л.с."></div><div class="form-group"><label class="form-label">Двигатель</label><input class="form-input" id="f-engine" placeholder="4.9L Flat-12"></div><div class="form-group"><label class="form-label">Разгон 0–100 км/ч</label><input class="form-input" id="f-speed0" placeholder="5.8 с"></div><div class="form-group"><label class="form-label">Макс. скорость</label><input class="form-input" id="f-topspeed" placeholder="290 км/ч"></div><div class="form-divider"></div><div class="form-group full"><label class="form-label">Краткое описание *</label><input class="form-input" id="f-tagline" placeholder="Икона итальянского дизайна восьмидесятых"></div><div class="form-group full"><label class="form-label">История автомобиля</label><textarea class="form-textarea" id="f-story" rows="4" placeholder="Расскажите что-нибудь интересное об этой машине..."></textarea></div></div><div class="form-actions"><button class="btn-ghost" onclick="closeAddCar()">Отмена</button><button class="btn-primary" onclick="submitNewCar()">Добавить в коллекцию →</button></div></div></div></div>
-<div class="toast" id="toast"><span class="toast-icon" id="toast-icon">✓</span><span id="toast-msg">Готово</span></div>
-<div class="modal-backdrop" id="car-modal" onclick="closeModal(event)"><div class="modal" id="modal-inner"></div></div>
-<div class="compare-bar" id="compare-bar"><span class="compare-label">Сравнить:</span><div class="compare-slots" id="compare-slots"></div><button class="btn-primary" onclick="openCompare()" id="compare-go-btn" style="display:none;">Сравнить →</button><button class="btn-ghost" onclick="clearCompare()">Очистить</button></div>
-<div class="compare-modal" id="compare-modal"><div class="compare-wrap"><button class="compare-close-btn" onclick="closeCompare()">← Назад</button><div class="compare-title">Сравнение</div><div id="compare-content"></div></div></div>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-logo" onclick="showPage('home')">Motor<span>Dreams</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Главная</a>
+    <a onclick="showPage('catalog')" id="nav-catalog">Каталог</a>
+    <a onclick="showPage('about')" id="nav-about">О проекте</a>
+    <a onclick="showPage('contact')" id="nav-contact">Контакт</a>
+    <button class="btn-add-car" onclick="openAddCar()" title="Добавить автомобиль">+ Авто</button>
+    <button class="garage-btn" onclick="showPage('garage')">
+      🚗 Мой гараж <span class="garage-count" id="garage-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- HOME PAGE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="home-page" class="page active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Виртуальный музей &mdash; 15 легенд</div>
+      <h1 class="hero-title">Motor<span>Dreams</span></h1>
+      <p class="hero-sub">От Cadillac Eldorado до Koenigsegg Agera &mdash; три эпохи, один гараж</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showPage('catalog')">Смотреть коллекцию</button>
+        <button class="btn-ghost" onclick="showPage('about')">О проекте</button>
+      </div>
+    </div>
+    <div class="hero-cars" id="hero-cars"></div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Лучшие экспонаты</h2>
+      <span class="section-num">01 / Коллекция</span>
+    </div>
+    <div class="featured-grid" id="featured-grid"></div>
+  </div>
+
+  <!-- STATS -->
+  <div style="border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface);">
+    <div style="max-width:1400px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border);">
+      <div style="background:var(--surface); padding:2.5rem 3rem;">
+        <div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">15</div>
+        <div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Легендарных авто</div>
+      </div>
+      <div style="background:var(--surface); padding:2.5rem 3rem;">
+        <div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">3</div>
+        <div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Эпохи автопрома</div>
+      </div>
+      <div style="background:var(--surface); padding:2.5rem 3rem;">
+        <div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">6</div>
+        <div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Стран производителей</div>
+      </div>
+      <div style="background:var(--surface); padding:2.5rem 3rem;">
+        <div style="font-family:var(--font-display); font-size:3.5rem; color:var(--gold);">∞</div>
+        <div style="font-family:var(--font-mono); font-size:.65rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-top:.25rem;">Часов восхищения</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Motor<span>Dreams</span></div>
+    <div class="footer-text">Проектная работа &bull; 2025</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- CATALOG PAGE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="catalog-page" class="page">
+  <div class="catalog-header">
+    <h1 class="catalog-title">Каталог</h1>
+    <p class="catalog-count" id="catalog-count">Загрузка...</p>
+  </div>
+
+  <div class="filters-bar">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Поиск по названию...">
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group" id="epoch-filters">
+      <button class="filter-chip active" data-filter="epoch" data-val="all">Все эпохи</button>
+      <button class="filter-chip" data-filter="epoch" data-val="retro">Ретро</button>
+      <button class="filter-chip" data-filter="epoch" data-val="golden">Золотая эра</button>
+      <button class="filter-chip" data-filter="epoch" data-val="modern">Современные</button>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group" id="country-filters">
+      <button class="filter-chip active" data-filter="country" data-val="all">Все страны</button>
+      <button class="filter-chip" data-filter="country" data-val="США">США</button>
+      <button class="filter-chip" data-filter="country" data-val="Германия">Германия</button>
+      <button class="filter-chip" data-filter="country" data-val="Италия">Италия</button>
+      <button class="filter-chip" data-filter="country" data-val="Япония">Япония</button>
+      <button class="filter-chip" data-filter="country" data-val="Швеция">Швеция</button>
+      <button class="filter-chip" data-filter="country" data-val="Великобритания">Великобритания</button>
+    </div>
+  </div>
+
+  <div class="catalog-grid" id="catalog-grid"></div>
+
+  <footer>
+    <div class="footer-logo">Motor<span>Dreams</span></div>
+    <div class="footer-text">Проектная работа &bull; 2025</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- GARAGE PAGE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="garage-page" class="page">
+  <div class="garage-header">
+    <div style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem;">Персональная коллекция</div>
+    <h1 class="garage-title">Мой Гараж</h1>
+    <p style="font-family:var(--font-mono); font-size:.8rem; color:var(--muted); margin-top:.5rem;" id="garage-subtitle"></p>
+  </div>
+  <div id="garage-grid" style="padding:1px; background:var(--border);">
+    <!-- filled dynamically -->
+  </div>
+  <div id="garage-empty" class="garage-empty" style="display:none;">
+    <div class="garage-empty-icon">🏎</div>
+    <h3>Гараж пустой</h3>
+    <p style="margin-bottom:2rem;">Добавляйте автомобили из каталога — нажмите ❤ на любой карточке</p>
+    <button class="btn-primary" onclick="showPage('catalog')">Открыть каталог</button>
+  </div>
+  <footer>
+    <div class="footer-logo">Motor<span>Dreams</span></div>
+    <div class="footer-text">Проектная работа &bull; 2025</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- ABOUT PAGE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="about-page" class="page">
+  <div class="about-wrap">
+    <div class="about-kicker">О проекте</div>
+    <h1 class="about-title">MotorDreams Collection</h1>
+    <div class="about-body">
+      <p>Идея этого проекта появилась из простого наблюдения: коллекционировать автомобили в реальной жизни могут единицы, но восхищаться ими — абсолютно все. Кто-то мечтал о Ferrari в детстве, кто-то вырос рядом с «шестёркой» и считает её самой настоящей машиной мечты.</p>
+      <p>Виртуальная коллекция — это способ собрать всё это разнообразие в одном месте, где каждый найдёт что-то своё. 15 автомобилей трёх эпох: от довоенной классики до современных гиперкаров.</p>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <div style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:1rem;">Критерии отбора</div>
+    <div class="criteria-grid">
+      <div class="criteria-item">
+        <div class="criteria-num">01</div>
+        <div class="criteria-title">Историческая значимость</div>
+        <div class="criteria-desc">Первопроходцы, автомобили, изменившие рынок, «законодатели моды»</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-num">02</div>
+        <div class="criteria-title">Техническая уникальность</div>
+        <div class="criteria-desc">Необычные двигатели, революционная трансмиссия, экспериментальные материалы</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-num">03</div>
+        <div class="criteria-title">Культовый статус</div>
+        <div class="criteria-desc">Автомобили из фильмов, машины-символы целых эпох</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-num">04</div>
+        <div class="criteria-title">Визуальная привлекательность</div>
+        <div class="criteria-desc">Мировые премии дизайна и то, что реально цепляет взгляд</div>
+      </div>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <div style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:1rem;">Технологии</div>
+    <div class="about-body">
+      <p>Сайт написан на чистом HTML5, CSS3 и JavaScript — без фреймворков. Адаптивный дизайн работает на любом устройстве. Личный гараж сохраняется в localStorage браузера.</p>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+      <span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">HTML5</span>
+      <span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">CSS3</span>
+      <span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">JavaScript</span>
+      <span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">LocalStorage</span>
+      <span style="font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted); border:1px solid var(--border-lit); padding:.3rem .7rem; border-radius:1px;">Адаптивная вёрстка</span>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo">Motor<span>Dreams</span></div>
+    <div class="footer-text">Проектная работа &bull; 2025</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- CONTACT PAGE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div id="contact-page" class="page">
+  <div class="contact-wrap">
+    <div class="contact-kicker">Связь с разработчиком</div>
+    <h1 class="contact-title">Напишите нам</h1>
+    <p class="contact-sub">Нашли ошибку, хотите предложить новый автомобиль для коллекции<br>или просто хотите сказать что-то приятное — пишите.</p>
+
+    <div class="contact-layout">
+      <!-- LEFT: info cards -->
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-card-icon">✉️</div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-val">
+            <a href="mailto:zenakrasilov40@gmail.com">zenakrasilov40@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">💬</div>
+          <div class="contact-card-label">Telegram</div>
+          <div class="contact-card-val">
+              <a href="https://t.me/DQOEYFHGRU" target="_blank">@DQOEYFHGRU</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🐙</div>
+          <div class="contact-card-label">GitHub</div>
+          <div class="contact-card-val">
+            <a href="https://github.com/Set90" target="_blank">github.com/Set90</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">⏱</div>
+          <div class="contact-card-label">Время ответа</div>
+          <div class="contact-card-val" style="color:var(--muted); font-size:.85rem;">
+            Обычно отвечаем в течение 24 часов
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: form -->
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Ваше имя</label>
+          <input class="form-input" id="c-name" placeholder="Иван Петров" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email для ответа</label>
+          <input class="form-input" id="c-email" type="email" placeholder="ivan@mail.ru">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Тема</label>
+          <select class="form-select" id="c-topic">
+            <option value="">Выберите тему...</option>
+            <option value="bug">🐛 Нашёл ошибку</option>
+            <option value="car">🚗 Предложить автомобиль</option>
+            <option value="idea">💡 Идея для сайта</option>
+            <option value="collab">🤝 Сотрудничество</option>
+            <option value="other">💬 Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Сообщение</label>
+          <textarea class="form-textarea" id="c-message" rows="5"
+            placeholder="Опишите вашу мысль подробнее..."></textarea>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="submitContact()" style="min-width:140px;">
+            Отправить →
+          </button>
+          <div class="contact-status" id="contact-status"></div>
+        </div>
+        <p style="font-family:var(--font-mono); font-size:.62rem; color:var(--muted); margin-top:.5rem; line-height:1.6;">
+          Форма сохраняет сообщение локально и открывает ваш почтовый клиент.<br>
+          Ваши данные никуда не передаются автоматически.
+        </p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo">Motor<span>Dreams</span></div>
+    <div class="footer-text">Проектная работа &bull; 2025</div>
+  </footer>
+</div>
+
+<!-- ── ADD CAR MODAL ── -->
+<div class="add-modal-backdrop" id="add-car-modal" onclick="closeAddCarOutside(event)">
+  <div class="add-modal">
+    <div class="add-modal-header">
+      <div class="add-modal-title">Новый автомобиль</div>
+      <button class="add-modal-close" onclick="closeAddCar()">✕</button>
+    </div>
+    <div class="add-modal-body">
+      <div class="form-grid">
+
+        <!-- Photo drop -->
+        <div class="form-group full">
+          <label class="form-label">Фотография</label>
+          <div class="photo-drop" id="photo-drop">
+            <input type="file" id="photo-file" accept="image/*" onchange="handlePhotoSelect(this)">
+            <img class="photo-drop-preview" id="photo-preview">
+            <div id="photo-drop-inner">
+              <div class="photo-drop-icon">📷</div>
+              <div class="photo-drop-text">Нажмите или перетащите фото сюда</div>
+              <div style="font-family:var(--font-mono); font-size:.6rem; color:var(--muted); margin-top:.4rem; letter-spacing:.05em;">JPG, PNG, WEBP · до 5 МБ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Make & Model -->
+        <div class="form-group">
+          <label class="form-label">Марка *</label>
+          <input class="form-input" id="f-make" placeholder="Ferrari">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Модель *</label>
+          <input class="form-input" id="f-model" placeholder="Testarossa">
+        </div>
+
+        <!-- Year & Country -->
+        <div class="form-group">
+          <label class="form-label">Год выпуска *</label>
+          <input class="form-input" id="f-year" placeholder="1984–1991">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Страна</label>
+          <select class="form-select" id="f-country">
+            <option value="Италия">Италия</option>
+            <option value="Германия">Германия</option>
+            <option value="США">США</option>
+            <option value="Япония">Япония</option>
+            <option value="Великобритания">Великобритания</option>
+            <option value="Франция">Франция</option>
+            <option value="Швеция">Швеция</option>
+            <option value="Другая">Другая</option>
+          </select>
+        </div>
+
+        <!-- Epoch -->
+        <div class="form-group full">
+          <label class="form-label">Эпоха</label>
+          <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+            <button class="filter-chip active" data-epoch="retro" onclick="selectEpoch(this)">Ретро-классика</button>
+            <button class="filter-chip" data-epoch="golden" onclick="selectEpoch(this)">Золотая эра</button>
+            <button class="filter-chip" data-epoch="modern" onclick="selectEpoch(this)">Современные</button>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Specs -->
+        <div class="form-group">
+          <label class="form-label">Мощность</label>
+          <input class="form-input" id="f-power" placeholder="390 л.с.">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Двигатель</label>
+          <input class="form-input" id="f-engine" placeholder="4.9L Flat-12">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Разгон 0–100 км/ч</label>
+          <input class="form-input" id="f-speed0" placeholder="5.8 с">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Макс. скорость</label>
+          <input class="form-input" id="f-topspeed" placeholder="290 км/ч">
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Tagline & Story -->
+        <div class="form-group full">
+          <label class="form-label">Краткое описание *</label>
+          <input class="form-input" id="f-tagline" placeholder="Икона итальянского дизайна восьмидесятых">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">История автомобиля</label>
+          <textarea class="form-textarea" id="f-story" rows="4"
+            placeholder="Расскажите что-нибудь интересное об этой машине..."></textarea>
+        </div>
+
+      </div><!-- /form-grid -->
+
+      <div class="form-actions">
+        <button class="btn-ghost" onclick="closeAddCar()">Отмена</button>
+        <button class="btn-primary" onclick="submitNewCar()">Добавить в коллекцию →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon">✓</span>
+  <span id="toast-msg">Готово</span>
+</div>
+
+<!-- ── DETAIL MODAL ── -->
+<div class="modal-backdrop" id="car-modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-inner">
+    <!-- filled dynamically -->
+  </div>
+</div>
+
+<!-- ── COMPARE BAR ── -->
+<div class="compare-bar" id="compare-bar">
+  <span class="compare-label">Сравнить:</span>
+  <div class="compare-slots" id="compare-slots"></div>
+  <button class="btn-primary" onclick="openCompare()" id="compare-go-btn" style="display:none;">Сравнить →</button>
+  <button class="btn-ghost" onclick="clearCompare()">Очистить</button>
+</div>
+
+<!-- ── COMPARE MODAL ── -->
+<div class="compare-modal" id="compare-modal">
+  <div class="compare-wrap">
+    <button class="compare-close-btn" onclick="closeCompare()">← Назад</button>
+    <div class="compare-title">Сравнение</div>
+    <div id="compare-content"></div>
+  </div>
+</div>
+
 <script>
-const CARS=[{id:1,make:"Cadillac",model:"Eldorado",year:"1953",epoch:"retro",epochLabel:"Ретро-классика",country:"США",power:"210 л.с.",engine:"5.4L V8",speed0:"11.5 с",topSpeed:"175 км/ч",tagline:"Воплощение американской мечты послевоенной эпохи",story:"Cadillac Eldorado 1953 года — это не просто автомобиль, это манифест американского оптимизма. В стране, только что победившей в войне и переживающей экономический бум, Eldorado олицетворял мечту: огромный, блестящий, невероятно роскошный. Хромированные детали, панорамное лобовое стекло, форсированный V8 — всё это было заявлением о том, что лучшее только начинается. Было выпущено всего 532 экземпляра по цене $7600, что делало его самым дорогим Cadillac своего времени.",tags:["Ретро","США","Люкс","Культовый"],img:"photos/01_cadillac_eldorado.jpg",featured:true},{id:2,make:"Mercedes-Benz",model:"300SL",year:"1954–1963",epoch:"retro",epochLabel:"Ретро-классика",country:"Германия",power:"215 л.с.",engine:"3.0L I6",speed0:"8.8 с",topSpeed:"260 км/ч",tagline:"Первый суперкар в истории. С дверями-крыльями",story:"«Крылья чаек» — так называют фирменные двери 300SL, которые открываются вверх, как крылья птицы. Но это не просто дизайнерская прихоть: рамная конструкция кузова была настолько жёсткой, что обычные двери просто не помещались. Прямой впрыск топлива, трубчатая рама, скорость 260 км/ч — в 1954-м это был абсолютный прорыв. Журнал Road & Track назвал его лучшим автомобилем мира. Полвека спустя этот титул так и не устарел.",tags:["Германия","Спорт","Легенда","Крылья чаек"],img:"photos/02_mercedes_300sl.jpg",featured:true},{id:3,make:"Ford Mustang",model:"Shelby GT500",year:"1967",epoch:"retro",epochLabel:"Ретро-классика",country:"США",power:"355 л.с.",engine:"7.0L V8",speed0:"6.5 с",topSpeed:"210 км/ч",tagline:"Самый зубастый Мустанг шестидесятых",story:"Кэрролл Шелби взял обычный Mustang и сделал из него монстра. 427-кубовый V8, доработанная подвеска, спортивный выхлоп — GT500 превратился в машину, которую боялись соперники и обожали владельцы. Именно этот автомобиль прославился благодаря фильму «Угнать за 60 секунд» и до сих пор остаётся символом эпохи маслкаров. Мощность, звук, характер — всё по максимуму.",tags:["США","Маслкар","V8","Кино"],img:"photos/03_ford_mustang_shelby.jpg",featured:false},{id:4,make:"Ferrari",model:"F40",year:"1987–1992",epoch:"golden",epochLabel:"Золотая эра",country:"Италия",power:"478 л.с.",engine:"2.9L V8 Twin-Turbo",speed0:"4.1 с",topSpeed:"324 км/ч",tagline:"Последний Ferrari, одобренный самим Энцо",story:"Ferrari F40 — это автомобиль, который Энцо Феррари создал незадолго до своей смерти. Никакого комфорта, никакой электроники — только скорость и управляемость. Карбоновый кузов, два турбокомпрессора, 324 км/ч максимальной скорости. В 1987-м это был самый быстрый серийный автомобиль в мире. Тонкий брезент вместо стёкол, голый карбон в салоне, рёв двигателя без всякой шумоизоляции. F40 — это Ferrari в чистом виде.",tags:["Италия","Суперкар","Карбон","Легенда"],img:"photos/04_ferrari_f40.jpg",featured:true},{id:5,make:"Lamborghini",model:"Diablo",year:"1990–2001",epoch:"golden",epochLabel:"Золотая эра",country:"Италия",power:"492 л.с.",engine:"5.7L V12",speed0:"4.0 с",topSpeed:"325 км/ч",tagline:"Дьявол из Сант'Агата — мечта каждого ребёнка 90-х",story:"Когда в 1990-м Lamborghini показал Diablo, весь мир замер. Острые углы, ножничные двери, V12 с диким характером — это был не автомобиль, это было видение будущего. Над дизайном работал Марчелло Гандини, тот самый, кто придумал Countach. Диабло продавался 11 лет и за это время успел попасть на постеры в комнате каждого мальчишки планеты. 325 км/ч и звук, от которого останавливается сердце.",tags:["Италия","V12","90-е","Икона"],img:"photos/05_lamborghini_diablo.jpg",featured:true},{id:6,make:"Porsche",model:"911 (993)",year:"1994–1998",epoch:"golden",epochLabel:"Золотая эра",country:"Германия",power:"272 л.с.",engine:"3.6L Flat-6",speed0:"5.4 с",topSpeed:"270 км/ч",tagline:"Лучший 911 всех времён — последний с воздушным охлаждением",story:"Среди всех поколений Porsche 911 именно 993 считается вершиной. Последний 911 с легендарным воздушным охлаждением двигателя перед переходом на водяное — это живая история марки. Но дело не только в ностальгии: 993 действительно великолепен. Мультирычажная задняя подвеска, расширенные арки, утончённый дизайн. Коллекционеры платят за хорошие экземпляры в разы больше первоначальной цены.",tags:["Германия","Спорт","Классика","Boxer"],img:"photos/06_porsche_911_993.jpg",featured:false},{id:7,make:"Toyota",model:"Supra MK4",year:"1993–2002",epoch:"golden",epochLabel:"Золотая эра",country:"Япония",power:"320 л.с.",engine:"3.0L 2JZ-GTE Turbo",speed0:"4.6 с",topSpeed:"285 км/ч",tagline:"2JZ — двигатель, которому нет равных по тюнинговому потенциалу",story:"Toyota Supra MK4 стала культовой задолго до того, как попала в первый «Форсаж». Её 2JZ-GTE двигатель — это легенда тюнинга: при стоковых 320 силах он способен выдерживать более 1000 л.с. при умелой настройке. Надёжность, потенциал, внешность — Supra получила всё. Сегодня хорошие экземпляры стоят дороже новых спорткаров. Японская инженерия на пике.",tags:["Япония","Тюнинг","JDM","Форсаж"],img:"photos/07_toyota_supra_mk4.jpg",featured:false},{id:8,make:"Bugatti",model:"Veyron",year:"2005–2015",epoch:"modern",epochLabel:"Современные суперкары",country:"Франция",power:"1001 л.с.",engine:"8.0L W16 Quad-Turbo",speed0:"2.5 с",topSpeed:"407 км/ч",tagline:"Первый серийный автомобиль быстрее 400 км/ч",story:"Когда Bugatti объявил, что Veyron развивает 407 км/ч, многие не верили. Когда это подтвердили независимые испытания — мир переосмыслил, что вообще значит «серийный автомобиль». 16 цилиндров, 4 турбокомпрессора, 10 радиаторов, особая резина Michelin, разработанная специально для этой скорости. Veyron не просто быстрый — он переписал правила игры целиком.",tags:["Франция","Гиперкар","W16","Рекорд"],img:"photos/08_bugatti_veyron.jpg",featured:true},{id:9,make:"McLaren",model:"P1",year:"2013–2015",epoch:"modern",epochLabel:"Современные суперкары",country:"Великобритания",power:"916 л.с.",engine:"3.8L V8 Hybrid",speed0:"2.8 с",topSpeed:"350 км/ч",tagline:"Гибридный гиперкар от создателей Формулы-1",story:"McLaren P1 — это трансфер технологий Формулы-1 на дорогу. Гибридная система IPAS даёт 179 л.с. только от электромотора. Активная аэродинамика меняет углы наклона антикрыла в реальном времени. Режим Race опускает машину на 50 мм, жёсткость подвески возрастает многократно. Всего 375 экземпляров, все проданы до старта производства. P1 вместе с Ferrari LaFerrari и Porsche 918 составил «Святую Троицу» гиперкаров 2010-х.",tags:["Великобритания","Гибрид","F1","Аэродинамика"],img:"photos/09_mclaren_p1.jpg",featured:true},{id:10,make:"Koenigsegg",model:"Agera R",year:"2011–2014",epoch:"modern",epochLabel:"Современные суперкары",country:"Швеция",power:"1140 л.с.",engine:"5.0L V8 Twin-Turbo",speed0:"2.9 с",topSpeed:"440 км/ч",tagline:"Швед, который сделал Bugatti нервничать",story:"Koenigsegg — маленькая шведская компания, которая бросила вызов всем гигантам. Agera R в 2011-м установила рекорд разгона 0–300–0 км/ч: 21.19 секунды. Это в два раза быстрее, чем у большинства конкурентов. Кристиан фон Кёнигсегг лично участвует в разработке каждой детали. Карбон везде, включая колёсные диски. Производится в штучных количествах и стоит как небольшой остров.",tags:["Швеция","Рекорд","Карбон","Гиперкар"],img:"photos/10_koenigsegg_agera_r.jpg",featured:false},{id:11,make:"Aston Martin",model:"DB5",year:"1963–1965",epoch:"retro",epochLabel:"Ретро-классика",country:"Великобритания",power:"282 л.с.",engine:"4.0L I6",speed0:"8.1 с",topSpeed:"233 км/ч",tagline:"Автомобиль Джеймса Бонда. Навсегда",story:"Goldfinger, 1964 год. Шон Коннери выезжает на экран за рулём серебристого Aston Martin — и этот кадр стал одним из самых узнаваемых в истории кино. DB5 и раньше был красивым автомобилем, но Бонд превратил его в легенду. Oggi Marriott спроектировал один из самых элегантных кузовов эпохи. Шесть десятилетий спустя DB5 по-прежнему на всех вечеринках самый красивый.",tags:["Великобритания","Бонд","Элегантность","Ретро"],img:"photos/11_aston_martin_db5.jpg",featured:false},{id:12,make:"Lamborghini",model:"Countach",year:"1974–1990",epoch:"golden",epochLabel:"Золотая эра",country:"Италия",power:"375 л.с.",engine:"4.8L V12",speed0:"5.6 с",topSpeed:"295 км/ч",tagline:"Самый безумный дизайн семидесятых. До сих пор не устарел",story:"Когда инженер Nuccio Bertone впервые увидел прототип Countach в 1971-м, он воскликнул на пьемонтском диалекте «countach!» — примерно «ничего себе!». Имя прилипло. Острые клинообразные формы, ножничные двери, огромный воздухозаборник на крыше — Countach выглядел как космический корабль на фоне любого другого автомобиля. И оставался в производстве 16 лет без принципиальных изменений — потому что менять было нечего.",tags:["Италия","V12","70-е","Дизайн"],img:"photos/12_lamborghini_countach.jpg",featured:false},{id:13,make:"Porsche",model:"918 Spyder",year:"2013–2015",epoch:"modern",epochLabel:"Современные суперкары",country:"Германия",power:"887 л.с.",engine:"4.6L V8 Hybrid",speed0:"2.6 с",topSpeed:"345 км/ч",tagline:"Нюрбургринг за 6:57. Рекорд среди серийных машин",story:"Porsche 918 Spyder в 2013 году объехал Нюрбургринг за 6 минут 57 секунд — это был рекорд среди серийных автомобилей. Гибридная система с тремя моторами, задние колёса управляемые, карбоновый монокок. При этом 918 расходует в гибридном режиме около 3 литров на 100 км. Он быстрее, экономичнее, технологичнее. Третий в «Святой Троице» — и по многим параметрам лучший.",tags:["Германия","Гибрид","Рекорд","Нюрбургринг"],img:"photos/13_porsche_918_spyder.jpg",featured:false},{id:14,make:"BMW",model:"M1",year:"1978–1981",epoch:"golden",epochLabel:"Золотая эра",country:"Германия",power:"277 л.с.",engine:"3.5L I6",speed0:"5.6 с",topSpeed:"261 км/ч",tagline:"Единственный среднемоторный BMW в истории",story:"BMW M1 — это единственный серийный автомобиль с мотором в центре кузова, который когда-либо выпускал BMW. Его разработку начинал Lamborghini — и отказался из-за финансовых трудностей. Кузов спроектировал Джорджетто Джуджаро. Гоночная версия BMW M1 Procar участвовала в гонках поддержки Формулы-1 с участием таких пилотов, как Лауда и Вильнёв. Редкий, красивый, исторически значимый.",tags:["Германия","Среднемоторный","Редкость","Гонки"],img:"photos/14_bmw_m1.jpg",featured:false},{id:15,make:"Pagani",model:"Zonda F",year:"2005–2009",epoch:"modern",epochLabel:"Современные суперкары",country:"Италия",power:"602 л.с.",engine:"7.3L V12 AMG",speed0:"3.6 с",topSpeed:"345 км/ч",tagline:"Скульптура из карбона и титана. Ручная работа",story:"Орацио Пагани начинал как специалист по карбоновым конструкциям в Lamborghini. Когда он основал собственную компанию, то сделал карбон главным материалом. Zonda F — это произведение искусства: карбон-титановый сплав, выхлопные трубы как органные трубы, кожаный интерьер ручной работы. Двигатель Mercedes-AMG V12 — один из лучших V12 в мире. Каждую машину делают месяцами, как часы.",tags:["Италия","Карбон","V12","Ручная работа"],img:"photos/15_pagani_zonda_f.jpg",featured:false}];
-let garage=JSON.parse(localStorage.getItem('mdc_garage')||'[]');
-let compareList=[];let activeFilters={epoch:'all',country:'all'};let searchQuery='';
-function saveGarage(){localStorage.setItem('mdc_garage',JSON.stringify(garage));}
-function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));document.getElementById(name+'-page').classList.add('active');const navEl=document.getElementById('nav-'+name);if(navEl)navEl.classList.add('active');window.scrollTo(0,0);if(name==='catalog')renderCatalog();if(name==='garage')renderGarage();}
-function buildCard(car,big=false){const inGarage=garage.includes(car.id);const inCompare=compareList.find(c=>c.id===car.id);const div=document.createElement('div');div.className='car-card';div.dataset.id=car.id;div.innerHTML=`<div class="car-thumb"><img src="${car.img}" alt="${car.make} ${car.model}" loading="lazy" onerror="this.classList.add('no-photo')"><div class="car-epoch">${car.epochLabel}</div><button class="garage-toggle ${inGarage?'saved':''}" data-id="${car.id}" title="${inGarage?'Убрать из гаража':'В гараж'}">${inGarage?'❤':'♡'}</button></div><div class="car-info"><div class="car-make">${car.make}</div><div class="car-name">${car.model}</div><div class="car-year">${car.year} &bull; ${car.country}</div><div class="car-tagline">${car.tagline}</div><div class="car-specs-row"><div class="spec-item"><div class="spec-val">${car.power}</div><div class="spec-key">Мощность</div></div><div class="spec-item"><div class="spec-val">${car.speed0}</div><div class="spec-key">0–100 км/ч</div></div><div class="spec-item"><div class="spec-val">${car.topSpeed}</div><div class="spec-key">Макс. скорость</div></div></div></div><div class="card-overlay"></div>`;div.querySelector('.garage-toggle').addEventListener('click',e=>{e.stopPropagation();toggleGarage(car.id,div.querySelector('.garage-toggle'));});div.addEventListener('click',()=>openModal(car.id));return div;}
-function renderHome(){const strip=document.getElementById('hero-cars');CARS.slice(0,6).forEach(car=>{const slot=document.createElement('div');slot.className='hero-car-slot';slot.innerHTML=`<img class="hero-car-img" src="${car.img}" alt="${car.model}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80'">`;strip.appendChild(slot);});const grid=document.getElementById('featured-grid');CARS.filter(c=>c.featured).slice(0,6).forEach(car=>{grid.appendChild(buildCard(car));});}
-function getFiltered(){return CARS.filter(car=>{const matchEpoch=activeFilters.epoch==='all'||car.epoch===activeFilters.epoch;const matchCountry=activeFilters.country==='all'||car.country===activeFilters.country;const matchSearch=searchQuery===''||car.model.toLowerCase().includes(searchQuery)||car.make.toLowerCase().includes(searchQuery);return matchEpoch&&matchCountry&&matchSearch;});}
-function renderCatalog(){const grid=document.getElementById('catalog-grid');grid.innerHTML='';const filtered=getFiltered();document.getElementById('catalog-count').textContent=`${filtered.length} из ${CARS.length} автомобилей`;filtered.forEach(car=>grid.appendChild(buildCard(car)));}
-document.querySelectorAll('.filter-chip').forEach(btn=>{btn.addEventListener('click',()=>{const type=btn.dataset.filter;const val=btn.dataset.val;activeFilters[type]=val;document.querySelectorAll(`[data-filter="${type}"]`).forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCatalog();});});
-document.getElementById('search-input').addEventListener('input',e=>{searchQuery=e.target.value.toLowerCase().trim();renderCatalog();});
-function renderGarage(){const grid=document.getElementById('garage-grid');const empty=document.getElementById('garage-empty');grid.innerHTML='';grid.style.display=garage.length?'grid':'none';grid.style.gridTemplateColumns='repeat(auto-fill, minmax(340px, 1fr))';grid.style.gap='1px';empty.style.display=garage.length?'none':'block';document.getElementById('garage-subtitle').textContent=garage.length?`${garage.length} ${pluralCar(garage.length)} в коллекции`:'';CARS.filter(c=>garage.includes(c.id)).forEach(car=>grid.appendChild(buildCard(car)));}
-function pluralCar(n){if(n%10===1&&n%100!==11)return'автомобиль';if([2,3,4].includes(n%10)&&![12,13,14].includes(n%100))return'автомобиля';return'автомобилей';}
-function toggleGarage(id,btn){if(garage.includes(id)){garage=garage.filter(x=>x!==id);if(btn){btn.textContent='♡';btn.classList.remove('saved');}}else{garage.push(id);if(btn){btn.textContent='❤';btn.classList.add('saved');}}saveGarage();updateGarageCount();document.querySelectorAll(`.garage-toggle[data-id="${id}"]`).forEach(b=>{b.textContent=garage.includes(id)?'❤':'♡';b.classList.toggle('saved',garage.includes(id));});}
-function updateGarageCount(){document.getElementById('garage-count').textContent=garage.length;}
-function openModal(id){const car=CARS.find(c=>c.id===id);if(!car)return;const inGarage=garage.includes(car.id);const modal=document.getElementById('modal-inner');modal.innerHTML=`<div class="modal-hero"><img src="${car.img}" alt="${car.model}" onerror="this.classList.add('no-photo')"><div class="modal-hero-overlay"></div><div class="modal-epoch">${car.epochLabel}</div><button class="modal-close" onclick="closeModal()">✕</button></div><div class="modal-body"><div class="modal-make">${car.make}</div><div class="modal-title">${car.model}</div><div class="modal-year">${car.year} &bull; ${car.country}</div><div class="modal-specs"><div class="modal-spec"><div class="modal-spec-val">${car.power}</div><div class="modal-spec-key">Мощность</div></div><div class="modal-spec"><div class="modal-spec-val">${car.engine}</div><div class="modal-spec-key">Двигатель</div></div><div class="modal-spec"><div class="modal-spec-val">${car.speed0}</div><div class="modal-spec-key">0–100 км/ч</div></div><div class="modal-spec"><div class="modal-spec-val">${car.topSpeed}</div><div class="modal-spec-key">Макс. скорость</div></div></div><div class="modal-story">${car.story.split('\n').map(p=>`<p>${p}</p>`).join('')}</div><div class="modal-tags">${car.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="modal-footer"><div style="display: flex; gap: 0.75rem;"><button class="btn-ghost" onclick="toggleCompare(${car.id})">${compareList.find(c=>c.id===car.id)?'✓ В сравнении':'+ Сравнить'}</button>${car.custom?`<button class="btn-ghost" style="color: var(--red); border-color: var(--border-lit);" onclick="deleteCustomCar(${car.id})" title="Удалить добавленный автомобиль">Удалить</button>`:''}</div><button class="btn-primary garage-modal-btn" data-id="${car.id}" onclick="toggleGarageModal(${car.id})">${inGarage?'❤ В гараже':'♡ В гараж'}</button></div></div>`;document.getElementById('car-modal').classList.add('open');document.body.style.overflow='hidden';}
-function toggleGarageModal(id){toggleGarage(id,null);const btn=document.querySelector('.garage-modal-btn');if(btn)btn.textContent=garage.includes(id)?'❤ В гараже':'♡ В гараж';}
-function closeModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('car-modal').classList.remove('open');document.body.style.overflow='';}
-function deleteCustomCar(id){const index=CARS.findIndex(c=>c.id===id);if(index>-1)CARS.splice(index,1);let customCars=JSON.parse(localStorage.getItem('mdc_custom_cars')||'[]');customCars=customCars.filter(c=>c.id!==id);localStorage.setItem('mdc_custom_cars',JSON.stringify(customCars));if(garage.includes(id)){garage=garage.filter(x=>x!==id);saveGarage();updateGarageCount();}if(compareList.find(c=>c.id===id)){compareList=compareList.filter(c=>c.id!==id);updateCompareBar();}closeModal();showToast('Автомобиль удалён','🗑',3000);if(document.getElementById('catalog-page').classList.contains('active'))renderCatalog();if(document.getElementById('garage-page').classList.contains('active'))renderGarage();}
-function toggleCompare(id){const car=CARS.find(c=>c.id===id);if(!car)return;if(compareList.find(c=>c.id===id)){compareList=compareList.filter(c=>c.id!==id);}else{if(compareList.length>=2){compareList.shift();}compareList.push(car);}updateCompareBar();}
-function updateCompareBar(){const bar=document.getElementById('compare-bar');const slots=document.getElementById('compare-slots');const goBtn=document.getElementById('compare-go-btn');bar.classList.toggle('visible',compareList.length>0);goBtn.style.display=compareList.length===2?'block':'none';slots.innerHTML='';for(let i=0;i<2;i++){const car=compareList[i];const slot=document.createElement('div');slot.className='compare-slot'+(car?' filled':'');slot.innerHTML=car?`<span class="compare-slot-name">${car.make} ${car.model}</span><button class="compare-remove" onclick="toggleCompare(${car.id})">✕</button>`:`<span>Выберите автомобиль...</span>`;slots.appendChild(slot);}}
-function clearCompare(){compareList=[];updateCompareBar();}
-function openCompare(){if(compareList.length<2)return;const[a,b]=compareList;const content=document.getElementById('compare-content');const rows=[['Страна',a.country,b.country],['Год выпуска',a.year,b.year],['Двигатель',a.engine,b.engine],['Мощность',a.power,b.power],['0–100 км/ч',a.speed0,b.speed0],['Макс. скорость',a.topSpeed,b.topSpeed],['Эпоха',a.epochLabel,b.epochLabel],];content.innerHTML=`<div class="compare-images"><div class="compare-img"><img src="${a.img}" alt="${a.model}" onerror="this.classList.add('no-photo')"></div><div class="compare-img"><img src="${b.img}" alt="${b.model}" onerror="this.classList.add('no-photo')"></div></div><div class="compare-table" style="margin-top:1px;"><div class="compare-cell key"></div><div class="compare-cell header">${a.make} ${a.model}</div><div class="compare-cell header">${b.make} ${b.model}</div>${rows.map(([key,va,vb])=>`<div class="compare-cell key">${key}</div><div class="compare-cell val">${va}</div><div class="compare-cell val">${vb}</div>`).join('')}</div>`;document.getElementById('compare-modal').classList.add('open');document.body.style.overflow='hidden';}
-function closeCompare(){document.getElementById('compare-modal').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeCompare();}});
-function showToast(msg,icon='✓',duration=3000){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;document.getElementById('toast-icon').textContent=icon;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),duration);}
-let selectedEpoch='retro';let selectedPhotoData=null;
-function openAddCar(){document.getElementById('add-car-modal').classList.add('open');document.body.style.overflow='hidden';}
-function closeAddCar(){document.getElementById('add-car-modal').classList.remove('open');document.body.style.overflow='';}
-function closeAddCarOutside(e){if(e.target===e.currentTarget)closeAddCar();}
-function selectEpoch(btn){document.querySelectorAll('[data-epoch]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedEpoch=btn.dataset.epoch;}
-function handlePhotoSelect(input){const file=input.files[0];if(!file)return;if(file.size>5*1024*1024){showToast('Файл слишком большой (макс. 5 МБ)','⚠',3000);return;}const reader=new FileReader();reader.onload=e=>{selectedPhotoData=e.target.result;const preview=document.getElementById('photo-preview');const inner=document.getElementById('photo-drop-inner');preview.src=selectedPhotoData;preview.style.display='block';inner.style.display='none';};reader.readAsDataURL(file);}
-document.addEventListener('DOMContentLoaded',()=>{const drop=document.getElementById('photo-drop');if(!drop)return;drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag-over');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag-over');const file=e.dataTransfer.files[0];if(file&&file.type.startsWith('image/')){const fakeInput={files:[file]};handlePhotoSelect(fakeInput);}});});
-function submitNewCar(){const make=document.getElementById('f-make').value.trim();const model=document.getElementById('f-model').value.trim();const year=document.getElementById('f-year').value.trim();const tagline=document.getElementById('f-tagline').value.trim();if(!make||!model||!year||!tagline){showToast('Заполните обязательные поля *','⚠',3000);return;}const epochLabels={retro:'Ретро-классика',golden:'Золотая эра',modern:'Современные суперкары'};const newCar={id:Date.now(),make,model,year,epoch:selectedEpoch,epochLabel:epochLabels[selectedEpoch],country:document.getElementById('f-country').value,power:document.getElementById('f-power').value.trim()||'—',engine:document.getElementById('f-engine').value.trim()||'—',speed0:document.getElementById('f-speed0').value.trim()||'—',topSpeed:document.getElementById('f-topspeed').value.trim()||'—',tagline,story:document.getElementById('f-story').value.trim()||tagline,tags:[document.getElementById('f-country').value,epochLabels[selectedEpoch]],img:selectedPhotoData||'',featured:false,custom:true,};const custom=JSON.parse(localStorage.getItem('mdc_custom_cars')||'[]');custom.push(newCar);localStorage.setItem('mdc_custom_cars',JSON.stringify(custom));CARS.push(newCar);['f-make','f-model','f-year','f-power','f-engine','f-speed0','f-topspeed','f-tagline','f-story'].forEach(id=>document.getElementById(id).value='');selectedPhotoData=null;document.getElementById('photo-preview').style.display='none';document.getElementById('photo-drop-inner').style.display='block';closeAddCar();showToast(`${make} ${model} добавлен в коллекцию!`,'🚗',3500);if(document.getElementById('catalog-page').classList.contains('active'))renderCatalog();}
-function loadCustomCars(){const custom=JSON.parse(localStorage.getItem('mdc_custom_cars')||'[]');custom.forEach(car=>CARS.push(car));}
-function submitContact(){const name=document.getElementById('c-name').value.trim();const email=document.getElementById('c-email').value.trim();const topic=document.getElementById('c-topic').value;const message=document.getElementById('c-message').value.trim();const status=document.getElementById('contact-status');if(!name||!message){status.style.display='block';status.style.color='#e74c3c';status.textContent='⚠ Заполните имя и сообщение';return;}const log=JSON.parse(localStorage.getItem('mdc_messages')||'[]');log.push({name,email,topic,message,date:new Date().toLocaleString('ru')});localStorage.setItem('mdc_messages',JSON.stringify(log));const topicLabels={bug:'Ошибка на сайте',car:'Предложение автомобиля',idea:'Идея',collab:'Сотрудничество',other:'Другое','':'Сообщение'};const subject=encodeURIComponent(`[MotorDreams] ${topicLabels[topic]||'Сообщение'} — от ${name}`);const body=encodeURIComponent(`Имя: ${name}\nEmail: ${email}\nТема: ${topicLabels[topic]}\n\n${message}`);window.location.href=`mailto:zenakrasilov40@gmail.com?subject=${subject}&body=${body}`;status.style.display='block';status.style.color='var(--gold)';status.textContent='✓ Сообщение сохранено. Открываем почту...';document.getElementById('c-name').value='';document.getElementById('c-email').value='';document.getElementById('c-topic').value='';document.getElementById('c-message').value='';showToast('Сообщение сохранено!','✉',4000);}
-window.addEventListener('scroll',()=>{const y=window.scrollY;const grid=document.querySelector('.hero-grid');if(grid)grid.style.transform=`translateY(${y*0.3}px)`;});
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
-loadCustomCars();renderHome();updateGarageCount();updateCompareBar();
-(function(){const wm=document.createElement('div');wm.style.position='fixed';wm.style.top='0';wm.style.left='0';wm.style.width='100vw';wm.style.height='100vh';wm.style.pointerEvents='none';wm.style.zIndex='999999';wm.style.backgroundImage="url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' transform='rotate(-45, 200, 200)' fill='%23ffffff' font-size='24' font-family='Arial, sans-serif' font-weight='bold' opacity='0.15'>ДЕМОВЕРСИЯ • НЕ ОПЛАЧЕНО</text></svg>\")";document.body.appendChild(wm);const protectWM=new MutationObserver(()=>{if(!document.body.contains(wm)){document.body.appendChild(wm);}if(wm.style.display==='none'||wm.style.opacity==='0'||wm.style.visibility==='hidden'){wm.style.display='block';wm.style.opacity='1';wm.style.visibility='visible';}});protectWM.observe(document.body,{childList:true,attributes:true,subtree:true});})();
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{if(e.code==='F12'){e.preventDefault();return false;}if((e.ctrlKey||e.metaKey)&&(e.code==='KeyU'||e.key.toLowerCase()==='u'||e.key.toLowerCase()==='г')){e.preventDefault();return false;}if((e.ctrlKey||e.metaKey)&&(e.code==='KeyS'||e.key.toLowerCase()==='s'||e.key.toLowerCase()==='ы')){e.preventDefault();return false;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['KeyI','KeyJ','KeyC'].includes(e.code)){e.preventDefault();return false;}});
-setInterval(()=>{const t=Date.now();debugger;if(Date.now()-t>100){document.body.innerHTML='<div style="display:flex;height:100vh;width:100vw;background:#000;color:#c0392b;align-items:center;justify-content:center;font-size:1.5rem;font-family:sans-serif;text-align:center;">ДОСТУП ЗАКРЫТ.<br>ОПЛАТИТЕ ПРОЕКТ ДЛЯ ПРОСМОТРА КОДА.</div>';}},500);
+// ════════════════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════════════════
+const CARS = [
+  {
+    id: 1, make: "Cadillac", model: "Eldorado", year: "1953",
+    epoch: "retro", epochLabel: "Ретро-классика", country: "США",
+    power: "210 л.с.", engine: "5.4L V8", speed0: "11.5 с",
+    topSpeed: "175 км/ч",
+    tagline: "Воплощение американской мечты послевоенной эпохи",
+    story: "Cadillac Eldorado 1953 года — это не просто автомобиль, это манифест американского оптимизма. В стране, только что победившей в войне и переживающей экономический бум, Eldorado олицетворял мечту: огромный, блестящий, невероятно роскошный. Хромированные детали, панорамное лобовое стекло, форсированный V8 — всё это было заявлением о том, что лучшее только начинается. Было выпущено всего 532 экземпляра по цене $7600, что делало его самым дорогим Cadillac своего времени.",
+    tags: ["Ретро", "США", "Люкс", "Культовый"],
+    img: "photos/01_cadillac_eldorado.jpg",
+    featured: true
+  },
+  {
+    id: 2, make: "Mercedes-Benz", model: "300SL", year: "1954–1963",
+    epoch: "retro", epochLabel: "Ретро-классика", country: "Германия",
+    power: "215 л.с.", engine: "3.0L I6", speed0: "8.8 с",
+    topSpeed: "260 км/ч",
+    tagline: "Первый суперкар в истории. С дверями-крыльями",
+    story: "«Крылья чаек» — так называют фирменные двери 300SL, которые открываются вверх, как крылья птицы. Но это не просто дизайнерская прихоть: рамная конструкция кузова была настолько жёсткой, что обычные двери просто не помещались. Прямой впрыск топлива, трубчатая рама, скорость 260 км/ч — в 1954-м это был абсолютный прорыв. Журнал Road & Track назвал его лучшим автомобилем мира. Полвека спустя этот титул так и не устарел.",
+    tags: ["Германия", "Спорт", "Легенда", "Крылья чаек"],
+    img: "photos/02_mercedes_300sl.jpg",
+    featured: true
+  },
+  {
+    id: 3, make: "Ford Mustang", model: "Shelby GT500", year: "1967",
+    epoch: "retro", epochLabel: "Ретро-классика", country: "США",
+    power: "355 л.с.", engine: "7.0L V8", speed0: "6.5 с",
+    topSpeed: "210 км/ч",
+    tagline: "Самый зубастый Мустанг шестидесятых",
+    story: "Кэрролл Шелби взял обычный Mustang и сделал из него монстра. 427-кубовый V8, доработанная подвеска, спортивный выхлоп — GT500 превратился в машину, которую боялись соперники и обожали владельцы. Именно этот автомобиль прославился благодаря фильму «Угнать за 60 секунд» и до сих пор остаётся символом эпохи маслкаров. Мощность, звук, характер — всё по максимуму.",
+    tags: ["США", "Маслкар", "V8", "Кино"],
+    img: "photos/03_ford_mustang_shelby.jpg",
+    featured: false
+  },
+  {
+    id: 4, make: "Ferrari", model: "F40", year: "1987–1992",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Италия",
+    power: "478 л.с.", engine: "2.9L V8 Twin-Turbo", speed0: "4.1 с",
+    topSpeed: "324 км/ч",
+    tagline: "Последний Ferrari, одобренный самим Энцо",
+    story: "Ferrari F40 — это автомобиль, который Энцо Феррари создал незадолго до своей смерти. Никакого комфорта, никакой электроники — только скорость и управляемость. Карбоновый кузов, два турбокомпрессора, 324 км/ч максимальной скорости. В 1987-м это был самый быстрый серийный автомобиль в мире. Тонкий брезент вместо стёкол, голый карбон в салоне, рёв двигателя без всякой шумоизоляции. F40 — это Ferrari в чистом виде.",
+    tags: ["Италия", "Суперкар", "Карбон", "Легенда"],
+    img: "photos/04_ferrari_f40.jpg",
+    featured: true
+  },
+  {
+    id: 5, make: "Lamborghini", model: "Diablo", year: "1990–2001",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Италия",
+    power: "492 л.с.", engine: "5.7L V12", speed0: "4.0 с",
+    topSpeed: "325 км/ч",
+    tagline: "Дьявол из Сант'Агата — мечта каждого ребёнка 90-х",
+    story: "Когда в 1990-м Lamborghini показал Diablo, весь мир замер. Острые углы, ножничные двери, V12 с диким характером — это был не автомобиль, это было видение будущего. Над дизайном работал Марчелло Гандини, тот самый, кто придумал Countach. Диабло продавался 11 лет и за это время успел попасть на постеры в комнате каждого мальчишки планеты. 325 км/ч и звук, от которого останавливается сердце.",
+    tags: ["Италия", "V12", "90-е", "Икона"],
+    img: "photos/05_lamborghini_diablo.jpg",
+    featured: true
+  },
+  {
+    id: 6, make: "Porsche", model: "911 (993)", year: "1994–1998",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Германия",
+    power: "272 л.с.", engine: "3.6L Flat-6", speed0: "5.4 с",
+    topSpeed: "270 км/ч",
+    tagline: "Лучший 911 всех времён — последний с воздушным охлаждением",
+    story: "Среди всех поколений Porsche 911 именно 993 считается вершиной. Последний 911 с легендарным воздушным охлаждением двигателя перед переходом на водяное — это живая история марки. Но дело не только в ностальгии: 993 действительно великолепен. Мультирычажная задняя подвеска, расширенные арки, утончённый дизайн. Коллекционеры платят за хорошие экземпляры в разы больше первоначальной цены.",
+    tags: ["Германия", "Спорт", "Классика", "Boxer"],
+    img: "photos/06_porsche_911_993.jpg",
+    featured: false
+  },
+  {
+    id: 7, make: "Toyota", model: "Supra MK4", year: "1993–2002",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Япония",
+    power: "320 л.с.", engine: "3.0L 2JZ-GTE Turbo", speed0: "4.6 с",
+    topSpeed: "285 км/ч",
+    tagline: "2JZ — двигатель, которому нет равных по тюнинговому потенциалу",
+    story: "Toyota Supra MK4 стала культовой задолго до того, как попала в первый «Форсаж». Её 2JZ-GTE двигатель — это легенда тюнинга: при стоковых 320 силах он способен выдерживать более 1000 л.с. при умелой настройке. Надёжность, потенциал, внешность — Supra получила всё. Сегодня хорошие экземпляры стоят дороже новых спорткаров. Японская инженерия на пике.",
+    tags: ["Япония", "Тюнинг", "JDM", "Форсаж"],
+    img: "photos/07_toyota_supra_mk4.jpg",
+    featured: false
+  },
+  {
+    id: 8, make: "Bugatti", model: "Veyron", year: "2005–2015",
+    epoch: "modern", epochLabel: "Современные суперкары", country: "Франция",
+    power: "1001 л.с.", engine: "8.0L W16 Quad-Turbo", speed0: "2.5 с",
+    topSpeed: "407 км/ч",
+    tagline: "Первый серийный автомобиль быстрее 400 км/ч",
+    story: "Когда Bugatti объявил, что Veyron развивает 407 км/ч, многие не верили. Когда это подтвердили независимые испытания — мир переосмыслил, что вообще значит «серийный автомобиль». 16 цилиндров, 4 турбокомпрессора, 10 радиаторов, особая резина Michelin, разработанная специально для этой скорости. Veyron не просто быстрый — он переписал правила игры целиком.",
+    tags: ["Франция", "Гиперкар", "W16", "Рекорд"],
+    img: "photos/08_bugatti_veyron.jpg",
+    featured: true
+  },
+  {
+    id: 9, make: "McLaren", model: "P1", year: "2013–2015",
+    epoch: "modern", epochLabel: "Современные суперкары", country: "Великобритания",
+    power: "916 л.с.", engine: "3.8L V8 Hybrid", speed0: "2.8 с",
+    topSpeed: "350 км/ч",
+    tagline: "Гибридный гиперкар от создателей Формулы-1",
+    story: "McLaren P1 — это трансфер технологий Формулы-1 на дорогу. Гибридная система IPAS даёт 179 л.с. только от электромотора. Активная аэродинамика меняет углы наклона антикрыла в реальном времени. Режим Race опускает машину на 50 мм, жёсткость подвески возрастает многократно. Всего 375 экземпляров, все проданы до старта производства. P1 вместе с Ferrari LaFerrari и Porsche 918 составил «Святую Троицу» гиперкаров 2010-х.",
+    tags: ["Великобритания", "Гибрид", "F1", "Аэродинамика"],
+    img: "photos/09_mclaren_p1.jpg",
+    featured: true
+  },
+  {
+    id: 10, make: "Koenigsegg", model: "Agera R", year: "2011–2014",
+    epoch: "modern", epochLabel: "Современные суперкары", country: "Швеция",
+    power: "1140 л.с.", engine: "5.0L V8 Twin-Turbo", speed0: "2.9 с",
+    topSpeed: "440 км/ч",
+    tagline: "Швед, который сделал Bugatti нервничать",
+    story: "Koenigsegg — маленькая шведская компания, которая бросила вызов всем гигантам. Agera R в 2011-м установила рекорд разгона 0–300–0 км/ч: 21.19 секунды. Это в два раза быстрее, чем у большинства конкурентов. Кристиан фон Кёнигсегг лично участвует в разработке каждой детали. Карбон везде, включая колёсные диски. Производится в штучных количествах и стоит как небольшой остров.",
+    tags: ["Швеция", "Рекорд", "Карбон", "Гиперкар"],
+    img: "photos/10_koenigsegg_agera_r.jpg",
+    featured: false
+  },
+  {
+    id: 11, make: "Aston Martin", model: "DB5", year: "1963–1965",
+    epoch: "retro", epochLabel: "Ретро-классика", country: "Великобритания",
+    power: "282 л.с.", engine: "4.0L I6", speed0: "8.1 с",
+    topSpeed: "233 км/ч",
+    tagline: "Автомобиль Джеймса Бонда. Навсегда",
+    story: "Goldfinger, 1964 год. Шон Коннери выезжает на экран за рулём серебристого Aston Martin — и этот кадр стал одним из самых узнаваемых в истории кино. DB5 и раньше был красивым автомобилем, но Бонд превратил его в легенду. Oggi Marriott спроектировал один из самых элегантных кузовов эпохи. Шесть десятилетий спустя DB5 по-прежнему на всех вечеринках самый красивый.",
+    tags: ["Великобритания", "Бонд", "Элегантность", "Ретро"],
+    img: "photos/11_aston_martin_db5.jpg",
+    featured: false
+  },
+  {
+    id: 12, make: "Lamborghini", model: "Countach", year: "1974–1990",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Италия",
+    power: "375 л.с.", engine: "4.8L V12", speed0: "5.6 с",
+    topSpeed: "295 км/ч",
+    tagline: "Самый безумный дизайн семидесятых. До сих пор не устарел",
+    story: "Когда инженер Nuccio Bertone впервые увидел прототип Countach в 1971-м, он воскликнул на пьемонтском диалекте «countach!» — примерно «ничего себе!». Имя прилипло. Острые клинообразные формы, ножничные двери, огромный воздухозаборник на крыше — Countach выглядел как космический корабль на фоне любого другого автомобиля. И оставался в производстве 16 лет без принципиальных изменений — потому что менять было нечего.",
+    tags: ["Италия", "V12", "70-е", "Дизайн"],
+    img: "photos/12_lamborghini_countach.jpg",
+    featured: false
+  },
+  {
+    id: 13, make: "Porsche", model: "918 Spyder", year: "2013–2015",
+    epoch: "modern", epochLabel: "Современные суперкары", country: "Германия",
+    power: "887 л.с.", engine: "4.6L V8 Hybrid", speed0: "2.6 с",
+    topSpeed: "345 км/ч",
+    tagline: "Нюрбургринг за 6:57. Рекорд среди серийных машин",
+    story: "Porsche 918 Spyder в 2013 году объехал Нюрбургринг за 6 минут 57 секунд — это был рекорд среди серийных автомобилей. Гибридная система с тремя моторами, задние колёса управляемые, карбоновый монокок. При этом 918 расходует в гибридном режиме около 3 литров на 100 км. Он быстрее, экономичнее, технологичнее. Третий в «Святой Троице» — и по многим параметрам лучший.",
+    tags: ["Германия", "Гибрид", "Рекорд", "Нюрбургринг"],
+    img: "photos/13_porsche_918_spyder.jpg",
+    featured: false
+  },
+  {
+    id: 14, make: "BMW", model: "M1", year: "1978–1981",
+    epoch: "golden", epochLabel: "Золотая эра", country: "Германия",
+    power: "277 л.с.", engine: "3.5L I6", speed0: "5.6 с",
+    topSpeed: "261 км/ч",
+    tagline: "Единственный среднемоторный BMW в истории",
+    story: "BMW M1 — это единственный серийный автомобиль с мотором в центре кузова, который когда-либо выпускал BMW. Его разработку начинал Lamborghini — и отказался из-за финансовых трудностей. Кузов спроектировал Джорджетто Джуджаро. Гоночная версия BMW M1 Procar участвовала в гонках поддержки Формулы-1 с участием таких пилотов, как Лауда и Вильнёв. Редкий, красивый, исторически значимый.",
+    tags: ["Германия", "Среднемоторный", "Редкость", "Гонки"],
+    img: "photos/14_bmw_m1.jpg",
+    featured: false
+  },
+  {
+    id: 15, make: "Pagani", model: "Zonda F", year: "2005–2009",
+    epoch: "modern", epochLabel: "Современные суперкары", country: "Италия",
+    power: "602 л.с.", engine: "7.3L V12 AMG", speed0: "3.6 с",
+    topSpeed: "345 км/ч",
+    tagline: "Скульптура из карбона и титана. Ручная работа",
+    story: "Орацио Пагани начинал как специалист по карбоновым конструкциям в Lamborghini. Когда он основал собственную компанию, то сделал карбон главным материалом. Zonda F — это произведение искусства: карбон-титановый сплав, выхлопные трубы как органные трубы, кожаный интерьер ручной работы. Двигатель Mercedes-AMG V12 — один из лучших V12 в мире. Каждую машину делают месяцами, как часы.",
+    tags: ["Италия", "Карбон", "V12", "Ручная работа"],
+    img: "photos/15_pagani_zonda_f.jpg",
+    featured: false
+  },
+];
+
+// ════════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════════
+let garage = JSON.parse(localStorage.getItem('mdc_garage') || '[]');
+let compareList = [];
+let activeFilters = { epoch: 'all', country: 'all' };
+let searchQuery = '';
+
+function saveGarage() {
+  localStorage.setItem('mdc_garage', JSON.stringify(garage));
+}
+
+// ════════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById(name + '-page').classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+
+  if (name === 'catalog') renderCatalog();
+  if (name === 'garage') renderGarage();
+}
+
+// ════════════════════════════════════════════════════════════════════
+// CARD BUILDER
+// ════════════════════════════════════════════════════════════════════
+function buildCard(car, big = false) {
+  const inGarage = garage.includes(car.id);
+  const inCompare = compareList.find(c => c.id === car.id);
+  const div = document.createElement('div');
+  div.className = 'car-card';
+  div.dataset.id = car.id;
+  div.innerHTML = `
+    <div class="car-thumb">
+      <img src="${car.img}" alt="${car.make} ${car.model}" loading="lazy" onerror="this.classList.add('no-photo')">
+      <div class="car-epoch">${car.epochLabel}</div>
+      <button class="garage-toggle ${inGarage ? 'saved' : ''}" data-id="${car.id}" title="${inGarage ? 'Убрать из гаража' : 'В гараж'}">
+        ${inGarage ? '❤' : '♡'}
+      </button>
+    </div>
+    <div class="car-info">
+      <div class="car-make">${car.make}</div>
+      <div class="car-name">${car.model}</div>
+      <div class="car-year">${car.year} &bull; ${car.country}</div>
+      <div class="car-tagline">${car.tagline}</div>
+      <div class="car-specs-row">
+        <div class="spec-item"><div class="spec-val">${car.power}</div><div class="spec-key">Мощность</div></div>
+        <div class="spec-item"><div class="spec-val">${car.speed0}</div><div class="spec-key">0–100 км/ч</div></div>
+        <div class="spec-item"><div class="spec-val">${car.topSpeed}</div><div class="spec-key">Макс. скорость</div></div>
+      </div>
+    </div>
+    <div class="card-overlay"></div>`;
+
+  div.querySelector('.garage-toggle').addEventListener('click', e => {
+    e.stopPropagation();
+    toggleGarage(car.id, div.querySelector('.garage-toggle'));
+  });
+  div.addEventListener('click', () => openModal(car.id));
+  return div;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// HOME
+// ════════════════════════════════════════════════════════════════════
+function renderHome() {
+  // hero strip
+  const strip = document.getElementById('hero-cars');
+  CARS.slice(0, 6).forEach(car => {
+    const slot = document.createElement('div');
+    slot.className = 'hero-car-slot';
+    slot.innerHTML = `<img class="hero-car-img" src="${car.img}" alt="${car.model}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80'">`;
+    strip.appendChild(slot);
+  });
+
+  // featured
+  const grid = document.getElementById('featured-grid');
+  CARS.filter(c => c.featured).slice(0, 6).forEach(car => {
+    grid.appendChild(buildCard(car));
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+// CATALOG
+// ════════════════════════════════════════════════════════════════════
+function getFiltered() {
+  return CARS.filter(car => {
+    const matchEpoch = activeFilters.epoch === 'all' || car.epoch === activeFilters.epoch;
+    const matchCountry = activeFilters.country === 'all' || car.country === activeFilters.country;
+    const matchSearch = searchQuery === '' ||
+      car.model.toLowerCase().includes(searchQuery) ||
+      car.make.toLowerCase().includes(searchQuery);
+    return matchEpoch && matchCountry && matchSearch;
+  });
+}
+
+function renderCatalog() {
+  const grid = document.getElementById('catalog-grid');
+  grid.innerHTML = '';
+  const filtered = getFiltered();
+  document.getElementById('catalog-count').textContent =
+    `${filtered.length} из ${CARS.length} автомобилей`;
+  filtered.forEach(car => grid.appendChild(buildCard(car)));
+}
+
+// filter chips
+document.querySelectorAll('.filter-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const type = btn.dataset.filter;
+    const val = btn.dataset.val;
+    activeFilters[type] = val;
+    document.querySelectorAll(`[data-filter="${type}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCatalog();
+  });
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  renderCatalog();
+});
+
+// ════════════════════════════════════════════════════════════════════
+// GARAGE
+// ════════════════════════════════════════════════════════════════════
+function renderGarage() {
+  const grid = document.getElementById('garage-grid');
+  const empty = document.getElementById('garage-empty');
+  grid.innerHTML = '';
+  grid.style.display = garage.length ? 'grid' : 'none';
+  grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(340px, 1fr))';
+  grid.style.gap = '1px';
+  empty.style.display = garage.length ? 'none' : 'block';
+  document.getElementById('garage-subtitle').textContent =
+    garage.length ? `${garage.length} ${pluralCar(garage.length)} в коллекции` : '';
+  CARS.filter(c => garage.includes(c.id)).forEach(car => grid.appendChild(buildCard(car)));
+}
+
+function pluralCar(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return 'автомобиль';
+  if ([2,3,4].includes(n%10) && ![12,13,14].includes(n%100)) return 'автомобиля';
+  return 'автомобилей';
+}
+
+function toggleGarage(id, btn) {
+  if (garage.includes(id)) {
+    garage = garage.filter(x => x !== id);
+    if (btn) { btn.textContent = '♡'; btn.classList.remove('saved'); }
+  } else {
+    garage.push(id);
+    if (btn) { btn.textContent = '❤'; btn.classList.add('saved'); }
+  }
+  saveGarage();
+  updateGarageCount();
+  // refresh all buttons across the page
+  document.querySelectorAll(`.garage-toggle[data-id="${id}"]`).forEach(b => {
+    b.textContent = garage.includes(id) ? '❤' : '♡';
+    b.classList.toggle('saved', garage.includes(id));
+  });
+}
+
+function updateGarageCount() {
+  document.getElementById('garage-count').textContent = garage.length;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════════════════════════════
+function openModal(id) {
+  const car = CARS.find(c => c.id === id);
+  if (!car) return;
+  const inGarage = garage.includes(car.id);
+  const modal = document.getElementById('modal-inner');
+  modal.innerHTML = `
+    <div class="modal-hero">
+      <img src="${car.img}" alt="${car.model}" onerror="this.classList.add('no-photo')">
+      <div class="modal-hero-overlay"></div>
+      <div class="modal-epoch">${car.epochLabel}</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-make">${car.make}</div>
+      <div class="modal-title">${car.model}</div>
+      <div class="modal-year">${car.year} &bull; ${car.country}</div>
+      <div class="modal-specs">
+        <div class="modal-spec"><div class="modal-spec-val">${car.power}</div><div class="modal-spec-key">Мощность</div></div>
+        <div class="modal-spec"><div class="modal-spec-val">${car.engine}</div><div class="modal-spec-key">Двигатель</div></div>
+        <div class="modal-spec"><div class="modal-spec-val">${car.speed0}</div><div class="modal-spec-key">0–100 км/ч</div></div>
+        <div class="modal-spec"><div class="modal-spec-val">${car.topSpeed}</div><div class="modal-spec-key">Макс. скорость</div></div>
+      </div>
+      <div class="modal-story">${car.story.split('\n').map(p => `<p>${p}</p>`).join('')}</div>
+      <div class="modal-tags">${car.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <div class="modal-footer">
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn-ghost" onclick="toggleCompare(${car.id})">
+            ${compareList.find(c=>c.id===car.id) ? '✓ В сравнении' : '+ Сравнить'}
+          </button>
+          ${car.custom ? `<button class="btn-ghost" style="color: var(--red); border-color: var(--border-lit);" onclick="deleteCustomCar(${car.id})" title="Удалить добавленный автомобиль">Удалить</button>` : ''}
+        </div>
+        <button class="btn-primary garage-modal-btn" data-id="${car.id}" onclick="toggleGarageModal(${car.id})">
+          ${inGarage ? '❤ В гараже' : '♡ В гараж'}
+        </button>
+      </div>
+    </div>`;
+  document.getElementById('car-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function toggleGarageModal(id) {
+  toggleGarage(id, null);
+  const btn = document.querySelector('.garage-modal-btn');
+  if (btn) btn.textContent = garage.includes(id) ? '❤ В гараже' : '♡ В гараж';
+}
+
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('car-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function deleteCustomCar(id) {
+  // 1. Удаляем из основного массива CARS
+  const index = CARS.findIndex(c => c.id === id);
+  if (index > -1) CARS.splice(index, 1);
+
+  // 2. Удаляем из хранилища добавленных авто (localStorage)
+  let customCars = JSON.parse(localStorage.getItem('mdc_custom_cars') || '[]');
+  customCars = customCars.filter(c => c.id !== id);
+  localStorage.setItem('mdc_custom_cars', JSON.stringify(customCars));
+
+  // 3. Удаляем из гаража, если авто было туда добавлено
+  if (garage.includes(id)) {
+    garage = garage.filter(x => x !== id);
+    saveGarage();
+    updateGarageCount();
+  }
+
+  // 4. Удаляем из панели сравнения
+  if (compareList.find(c => c.id === id)) {
+    compareList = compareList.filter(c => c.id !== id);
+    updateCompareBar();
+  }
+
+  // Закрываем окно и показываем уведомление
+  closeModal();
+  showToast('Автомобиль удалён', '🗑', 3000);
+
+  // Обновляем текущую страницу, чтобы карточка исчезла визуально
+  if (document.getElementById('catalog-page').classList.contains('active')) renderCatalog();
+  if (document.getElementById('garage-page').classList.contains('active')) renderGarage();
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COMPARE
+// ════════════════════════════════════════════════════════════════════
+function toggleCompare(id) {
+  const car = CARS.find(c => c.id === id);
+  if (!car) return;
+  if (compareList.find(c => c.id === id)) {
+    compareList = compareList.filter(c => c.id !== id);
+  } else {
+    if (compareList.length >= 2) {
+      compareList.shift();
+    }
+    compareList.push(car);
+  }
+  updateCompareBar();
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById('compare-bar');
+  const slots = document.getElementById('compare-slots');
+  const goBtn = document.getElementById('compare-go-btn');
+  bar.classList.toggle('visible', compareList.length > 0);
+  goBtn.style.display = compareList.length === 2 ? 'block' : 'none';
+  slots.innerHTML = '';
+  for (let i = 0; i < 2; i++) {
+    const car = compareList[i];
+    const slot = document.createElement('div');
+    slot.className = 'compare-slot' + (car ? ' filled' : '');
+    slot.innerHTML = car
+      ? `<span class="compare-slot-name">${car.make} ${car.model}</span>
+         <button class="compare-remove" onclick="toggleCompare(${car.id})">✕</button>`
+      : `<span>Выберите автомобиль...</span>`;
+    slots.appendChild(slot);
+  }
+}
+
+function clearCompare() {
+  compareList = [];
+  updateCompareBar();
+}
+
+function openCompare() {
+  if (compareList.length < 2) return;
+  const [a, b] = compareList;
+  const content = document.getElementById('compare-content');
+  const rows = [
+    ['Страна', a.country, b.country],
+    ['Год выпуска', a.year, b.year],
+    ['Двигатель', a.engine, b.engine],
+    ['Мощность', a.power, b.power],
+    ['0–100 км/ч', a.speed0, b.speed0],
+    ['Макс. скорость', a.topSpeed, b.topSpeed],
+    ['Эпоха', a.epochLabel, b.epochLabel],
+  ];
+  content.innerHTML = `
+    <div class="compare-images">
+      <div class="compare-img"><img src="${a.img}" alt="${a.model}" onerror="this.classList.add('no-photo')"></div>
+      <div class="compare-img"><img src="${b.img}" alt="${b.model}" onerror="this.classList.add('no-photo')"></div>
+    </div>
+    <div class="compare-table" style="margin-top:1px;">
+      <div class="compare-cell key"></div>
+      <div class="compare-cell header">${a.make} ${a.model}</div>
+      <div class="compare-cell header">${b.make} ${b.model}</div>
+      ${rows.map(([key, va, vb]) => `
+        <div class="compare-cell key">${key}</div>
+        <div class="compare-cell val">${va}</div>
+        <div class="compare-cell val">${vb}</div>
+      `).join('')}
+    </div>`;
+  document.getElementById('compare-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCompare() {
+  document.getElementById('compare-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeCompare(); }
+});
+
+// ════════════════════════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════════════════════════
+function showToast(msg, icon = '✓', duration = 3000) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast-icon').textContent = icon;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// ADD CAR MODAL
+// ════════════════════════════════════════════════════════════════════
+let selectedEpoch = 'retro';
+let selectedPhotoData = null;
+
+function openAddCar() {
+  document.getElementById('add-car-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAddCar() {
+  document.getElementById('add-car-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeAddCarOutside(e) {
+  if (e.target === e.currentTarget) closeAddCar();
+}
+
+function selectEpoch(btn) {
+  document.querySelectorAll('[data-epoch]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedEpoch = btn.dataset.epoch;
+}
+
+function handlePhotoSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showToast('Файл слишком большой (макс. 5 МБ)', '⚠', 3000); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    selectedPhotoData = e.target.result;
+    const preview = document.getElementById('photo-preview');
+    const inner = document.getElementById('photo-drop-inner');
+    preview.src = selectedPhotoData;
+    preview.style.display = 'block';
+    inner.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// Drag & drop on photo area
+document.addEventListener('DOMContentLoaded', () => {
+  const drop = document.getElementById('photo-drop');
+  if (!drop) return;
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag-over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('drag-over'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const fakeInput = { files: [file] };
+      handlePhotoSelect(fakeInput);
+    }
+  });
+});
+
+function submitNewCar() {
+  const make   = document.getElementById('f-make').value.trim();
+  const model  = document.getElementById('f-model').value.trim();
+  const year   = document.getElementById('f-year').value.trim();
+  const tagline= document.getElementById('f-tagline').value.trim();
+
+  if (!make || !model || !year || !tagline) {
+    showToast('Заполните обязательные поля *', '⚠', 3000);
+    return;
+  }
+
+  const epochLabels = { retro: 'Ретро-классика', golden: 'Золотая эра', modern: 'Современные суперкары' };
+  const newCar = {
+    id: Date.now(),
+    make, model, year,
+    epoch: selectedEpoch,
+    epochLabel: epochLabels[selectedEpoch],
+    country: document.getElementById('f-country').value,
+    power:    document.getElementById('f-power').value.trim()    || '—',
+    engine:   document.getElementById('f-engine').value.trim()   || '—',
+    speed0:   document.getElementById('f-speed0').value.trim()   || '—',
+    topSpeed: document.getElementById('f-topspeed').value.trim() || '—',
+    tagline,
+    story: document.getElementById('f-story').value.trim() || tagline,
+    tags: [document.getElementById('f-country').value, epochLabels[selectedEpoch]],
+    img: selectedPhotoData || '',
+    featured: false,
+    custom: true,
+  };
+
+  // Save to localStorage
+  const custom = JSON.parse(localStorage.getItem('mdc_custom_cars') || '[]');
+  custom.push(newCar);
+  localStorage.setItem('mdc_custom_cars', JSON.stringify(custom));
+
+  // Add to runtime array
+  CARS.push(newCar);
+
+  // Reset form
+  ['f-make','f-model','f-year','f-power','f-engine','f-speed0','f-topspeed','f-tagline','f-story']
+    .forEach(id => document.getElementById(id).value = '');
+  selectedPhotoData = null;
+  document.getElementById('photo-preview').style.display = 'none';
+  document.getElementById('photo-drop-inner').style.display = 'block';
+
+  closeAddCar();
+  showToast(`${make} ${model} добавлен в коллекцию!`, '🚗', 3500);
+
+  // Refresh catalog if open
+  if (document.getElementById('catalog-page').classList.contains('active')) renderCatalog();
+}
+
+// Load custom cars from localStorage on startup
+function loadCustomCars() {
+  const custom = JSON.parse(localStorage.getItem('mdc_custom_cars') || '[]');
+  custom.forEach(car => CARS.push(car));
+}
+
+// ════════════════════════════════════════════════════════════════════
+// CONTACT FORM
+// ════════════════════════════════════════════════════════════════════
+function submitContact() {
+  const name    = document.getElementById('c-name').value.trim();
+  const email   = document.getElementById('c-email').value.trim();
+  const topic   = document.getElementById('c-topic').value;
+  const message = document.getElementById('c-message').value.trim();
+  const status  = document.getElementById('contact-status');
+
+  if (!name || !message) {
+    status.style.display = 'block';
+    status.style.color = '#e74c3c';
+    status.textContent = '⚠ Заполните имя и сообщение';
+    return;
+  }
+
+  // Save to localStorage
+  const log = JSON.parse(localStorage.getItem('mdc_messages') || '[]');
+  log.push({ name, email, topic, message, date: new Date().toLocaleString('ru') });
+  localStorage.setItem('mdc_messages', JSON.stringify(log));
+
+  // Open mail client as fallback
+  const topicLabels = {
+    bug: 'Ошибка на сайте', car: 'Предложение автомобиля',
+    idea: 'Идея', collab: 'Сотрудничество', other: 'Другое', '': 'Сообщение'
+  };
+  const subject = encodeURIComponent(`[MotorDreams] ${topicLabels[topic] || 'Сообщение'} — от ${name}`);
+  const body = encodeURIComponent(`Имя: ${name}\nEmail: ${email}\nТема: ${topicLabels[topic]}\n\n${message}`);
+  window.location.href = `mailto:zenakrasilov40@gmail.com?subject=${subject}&body=${body}`;
+
+  // Show success
+  status.style.display = 'block';
+  status.style.color = 'var(--gold)';
+  status.textContent = '✓ Сообщение сохранено. Открываем почту...';
+
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-topic').value = '';
+  document.getElementById('c-message').value = '';
+
+  showToast('Сообщение сохранено!', '✉', 4000);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// PARALLAX
+// ════════════════════════════════════════════════════════════════════
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const grid = document.querySelector('.hero-grid');
+  if (grid) grid.style.transform = `translateY(${y * 0.3}px)`;
+});
+
+// ════════════════════════════════════════════════════════════════════
+// REVEAL ON SCROLL
+// ════════════════════════════════════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .1 });
+
+// ════════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════════
+loadCustomCars();
+renderHome();
+updateGarageCount();
+updateCompareBar();
+
 </script>
 </body>
 </html>
